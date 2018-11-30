@@ -194,6 +194,10 @@ module.exports = {
         include: paths.appSrc,
       },
       {
+        test: /\.svg$/,
+        loader: 'svg-sprite-loader'
+      },
+      {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
@@ -221,16 +225,16 @@ module.exports = {
               ),
               
               plugins: [
-                [
-                  require.resolve('babel-plugin-named-asset-import'),
-                  {
-                    loaderMap: {
-                      svg: {
-                        ReactComponent: '@svgr/webpack?-prettier,-svgo![path]',
-                      },
-                    },
-                  },
-                ],
+                // [
+                //   require.resolve('babel-plugin-named-asset-import'),
+                //   {
+                //     loaderMap: {
+                //       svg: {
+                //         ReactComponent: '@svgr/webpack?-prettier,-svgo![path]',
+                //       },
+                //     },
+                //   },
+                // ],
               ],
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -323,7 +327,7 @@ module.exports = {
             // its runtime that would otherwise be processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|mjs|jsx|ts|tsx|svg)$/, /\.html$/, /\.json$/],
             loader: require.resolve('file-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
