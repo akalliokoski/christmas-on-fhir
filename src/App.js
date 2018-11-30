@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Background from './components/Background';
 import  Room from './components/Room';
+import  Path from './components/Path';
 import './assets/twitter.svg';
 import './assets/facebook.svg';
 
@@ -35,6 +36,11 @@ const initialState = {
       y: 220,
       icon: "facebook"
     }
+  ],
+  path: [
+    [100, 100],
+    [520, 100],
+    [520, 220]
   ]
 }
 
@@ -57,12 +63,13 @@ class App extends Component {
 
   render() {
     const { width, height } = this.state.canvas;
-    const { rooms } = this.state;
+    const { rooms, path } = this.state;
     return (
       <div className="App">
         <svg width={width} height={height}>
           <Background width={width} height={height} />
           { rooms.map(room => this.renderRoom(room)) }
+          <Path points={path} />
         </svg>
       </div>
     );
