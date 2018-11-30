@@ -2,32 +2,38 @@ import React, { Component } from 'react';
 import './App.css';
 import Background from './components/Background';
 import  Room from './components/Room';
+import './assets/twitter.svg';
+import './assets/facebook.svg';
 
 const initialState = {
   canvas: {
     width: 640,
     height: 320
   },
+  icons: {
+    "twitter": {
+      width: 50,
+      height: 50,
+      href: "#twitter"
+    },
+    "facebook": {
+      width: 50,
+      height: 50,
+      href: "#facebook"
+    }
+  },
   rooms: [
     {
       id: "A1",
       x: 100,
       y: 100,
-      graphic: {
-        width: 50,
-        height: 50,
-        svg: <rect x="0" y="0" width="50" height="50" fill="cornflowerblue"/>
-      }
+      icon: "twitter"
     },
     {
       id: "B2",
       x: 550,
       y: 220,
-      graphic: {
-        width: 50,
-        height: 50,
-        svg: <circle cx="0" cy="0" r="25" fill="aliceblue"/>
-      }
+      icon: "facebook"
     }
   ]
 }
@@ -36,9 +42,16 @@ class App extends Component {
   state = initialState
 
   renderRoom(room) {
-    const { id, x, y, graphic } = room; 
+    const { id, x, y, icon } = room;
+    const { icons } = this.state;
+    const iconObject = icons[icon];
+
     return (
-      <Room key={id} x={x} y={y} graphic={graphic} />
+      <Room
+        key={id}
+        x={x}
+        y={y}
+        icon={iconObject} />
     )
   }
 
