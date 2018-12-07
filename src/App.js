@@ -3,17 +3,21 @@ import CheckIn from './components/CheckIn/CheckIn';
 import Guide from './components/Guide/Guide';
 
 const initialState = {
-  checkIn: true
+  checkedIn: false
 }
 
 class App extends Component {
   state = initialState;
 
+  onCheckIn = () => {
+    this.setState({ checkedIn: true })
+  }
+
   render() {
-    const { checkIn } = this.state;
+    const { checkedIn } = this.state;
     return (
       <div className="App">
-        {checkIn ? <CheckIn /> : <Guide></Guide>}
+        {checkedIn ? <Guide /> : <CheckIn onCheckIn={this.onCheckIn}/>}
       </div>
     );
   }
