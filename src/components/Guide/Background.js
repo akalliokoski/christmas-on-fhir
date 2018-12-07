@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Background extends Component {
   render() {
@@ -15,5 +16,10 @@ class Background extends Component {
     );
   }
 }
+
+Background.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired
+};
 
 export default Background;

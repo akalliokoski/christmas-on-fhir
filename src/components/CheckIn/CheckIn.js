@@ -8,8 +8,9 @@ import {
   FormGroup,
   Input
 } from "reactstrap";
+import PropTypes from "prop-types";
 
-export default class CheckIn extends Component {
+class CheckIn extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { onCheckIn } = this.props;
@@ -40,3 +41,9 @@ export default class CheckIn extends Component {
     );
   }
 }
+
+CheckIn.propTypes = {
+  onCheckIn: PropTypes.func.isRequired
+};
+
+export default CheckIn;
