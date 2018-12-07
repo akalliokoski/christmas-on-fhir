@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import Background from './Background';
-import  Room from './Room';
-import  Path from './Path';
-import '../../assets/twitter.svg';
-import '../../assets/facebook.svg';
+import React, { Component } from "react";
+import Background from "./Background";
+import Room from "./Room";
+import Path from "./Path";
+import "../../assets/twitter.svg";
+import "../../assets/facebook.svg";
 
 const initialState = {
   canvas: {
@@ -11,12 +11,12 @@ const initialState = {
     height: 320
   },
   icons: {
-    "twitter": {
+    twitter: {
       width: 50,
       height: 50,
       href: "#twitter"
     },
-    "facebook": {
+    facebook: {
       width: 50,
       height: 50,
       href: "#facebook"
@@ -36,28 +36,18 @@ const initialState = {
       icon: "facebook"
     }
   ],
-  path: [
-    [100, 100],
-    [540, 100],
-    [540, 220]
-  ]
-}
+  path: [[100, 100], [540, 100], [540, 220]]
+};
 
 class Guide extends Component {
-  state = initialState
+  state = initialState;
 
   renderRoom(room) {
     const { id, x, y, icon } = room;
     const { icons } = this.state;
     const iconObject = icons[icon];
 
-    return (
-      <Room
-        key={id}
-        x={x}
-        y={y}
-        icon={iconObject} />
-    )
+    return <Room key={id} x={x} y={y} icon={iconObject} />;
   }
 
   render() {
@@ -67,7 +57,7 @@ class Guide extends Component {
       <div className="guide">
         <svg width={width} height={height}>
           <Background width={width} height={height} />
-          { rooms.map(room => this.renderRoom(room)) }
+          {rooms.map(room => this.renderRoom(room))}
           <Path points={path} />
         </svg>
       </div>
