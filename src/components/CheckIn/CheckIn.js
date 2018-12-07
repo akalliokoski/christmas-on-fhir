@@ -52,6 +52,7 @@ class CheckIn extends Component {
                 bsSize="lg"
                 value={this.state.id}
                 onChange={this.handleIdChange}
+                className="text-center"
               />
               <Button
                 className="mt-1 btn-block"
