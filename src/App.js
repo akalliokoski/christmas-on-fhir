@@ -1,22 +1,24 @@
 import React, { Component } from "react";
 import CheckIn from "./components/CheckIn/CheckIn";
 import PatientNotFound from "./components/CheckIn/PatientNotFound";
+import AppointmentNotFound from "./components/CheckIn/AppointmentNotFound";
 import Guide from "./components/Guide/Guide";
+import { getPatient } from "./services/patient";
+import { getAppointment } from "./services/appointment";
 
 const initialState = {
+  patientId: null,
   patient: null,
-  patientId: null
+  appointment: null
 };
 
 class App extends Component {
   state = initialState;
 
-  handlePatientNotFound = id => {
-    this.setState({ patientId: id, patient: null });
-  };
-
-  handleCheckIn = patient => {
-    this.setState({ patient });
+  handleCheckIn = id => {
+    const patient = getPatient(id);
+    const appointment = patient ? getAppointment(patient) : null;
+    this.setState({ patient, appointment });
   };
 
   reset = () => {
@@ -24,18 +26,17 @@ class App extends Component {
   };
 
   renderComponent() {
-    const { patientId, patient } = this.state;
+    const { patientId, patient, appointment } = this.state;
     if (!patientId && !patient) {
-      return (
-        <CheckIn
-          onCheckIn={this.handleCheckIn}
-          onPatientNotFound={this.handlePatientNotFound}
-        />
-      );
+      return <CheckIn onCheckIn={this.handleCheckIn} />;
     }
 
     if (!patient) {
       return <PatientNotFound patientId={patientId} onClose={this.reset} />;
+    }
+
+    if (!appointment) {
+      return <AppointmentNotFound onClose={this.reset} />;
     }
 
     return <Guide />;
