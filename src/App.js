@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import CheckIn from './components/CheckIn/CheckIn';
 import Guide from './components/Guide/Guide';
 
