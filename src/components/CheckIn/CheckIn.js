@@ -1,14 +1,36 @@
 import React, { Component } from "react";
-import { Button } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardTitle,
+  CardText,
+  Form,
+  FormGroup,
+  Input
+} from "reactstrap";
 
 export default class CheckIn extends Component {
-  render() {
+  onSubmit = e => {
+    e.preventDefault();
     const { onCheckIn } = this.props;
+    onCheckIn();
+  };
+
+  render() {
     return (
       <div>
-        <Button color="primary" onClick={onCheckIn}>
-          Check-In
-        </Button>
+        <Card body className="text-center">
+          <CardTitle>Check-In</CardTitle>
+          <CardText>Please type your ID</CardText>
+          <Form onSubmit={this.onSubmit}>
+            <FormGroup>
+              <Input bsSize="lg" />
+              <Button color="primary" type="submit">
+                Check-In
+              </Button>
+            </FormGroup>
+          </Form>
+        </Card>
       </div>
     );
   }
