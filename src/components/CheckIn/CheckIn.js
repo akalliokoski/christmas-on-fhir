@@ -25,7 +25,12 @@ export default class CheckIn extends Component {
           <Form onSubmit={this.onSubmit}>
             <FormGroup>
               <Input bsSize="lg" />
-              <Button color="primary" type="submit">
+              <Button
+                className="mt-1 btn-block"
+                size="lg"
+                color="primary"
+                type="submit"
+              >
                 Check-In
               </Button>
             </FormGroup>
