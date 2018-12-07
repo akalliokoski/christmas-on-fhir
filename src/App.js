@@ -1,25 +1,48 @@
 import React, { Component } from "react";
 import CheckIn from "./components/CheckIn/CheckIn";
+import PatientNotFound from "./components/CheckIn/PatientNotFound";
 import Guide from "./components/Guide/Guide";
 
 const initialState = {
-  checkedIn: false
+  patient: null,
+  patientId: null
 };
 
 class App extends Component {
   state = initialState;
 
-  onCheckIn = () => {
+  handlePatientNotFound = id => {
+    this.setState({ patientId: id, patient: null });
+  };
+
+  handleCheckIn = () => {
     this.setState({ checkedIn: true });
   };
 
+  reset = () => {
+    this.setState(initialState);
+  };
+
+  renderComponent() {
+    const { patientId, patient } = this.state;
+    if (!patientId && !patient) {
+      return (
+        <CheckIn
+          onCheckIn={this.handleCheckIn}
+          onPatientNotFound={this.handlePatientNotFound}
+        />
+      );
+    }
+
+    if (!patient) {
+      return <PatientNotFound patientId={patientId} onClose={this.reset} />;
+    }
+
+    return <Guide />;
+  }
+
   render() {
-    const { checkedIn } = this.state;
-    return (
-      <div className="App">
-        {checkedIn ? <Guide /> : <CheckIn onCheckIn={this.onCheckIn} />}
-      </div>
-    );
+    return <div className="App">{this.renderComponent()}</div>;
   }
 }
 

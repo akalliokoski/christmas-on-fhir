@@ -10,11 +10,34 @@ import {
 } from "reactstrap";
 import PropTypes from "prop-types";
 
+const getPatient = id => {
+  const parsed = Number(id);
+  if (isNaN(parsed)) {
+    return null;
+  }
+
+  return { id };
+};
+
 class CheckIn extends Component {
+  state = { id: "" };
+
   onSubmit = e => {
     e.preventDefault();
-    const { onCheckIn } = this.props;
-    onCheckIn();
+
+    const { onPatientNotFound, onCheckIn } = this.props;
+    const { id } = this.state;
+
+    const patient = getPatient(id);
+    if (!patient) {
+      onPatientNotFound(id);
+    }
+
+    onCheckIn(patient);
+  };
+
+  handleIdChange = event => {
+    this.setState({ id: event.target.value });
   };
 
   render() {
@@ -25,7 +48,11 @@ class CheckIn extends Component {
           <CardText>Please type your ID</CardText>
           <Form onSubmit={this.onSubmit}>
             <FormGroup>
-              <Input bsSize="lg" />
+              <Input
+                bsSize="lg"
+                value={this.state.id}
+                onChange={this.handleIdChange}
+              />
               <Button
                 className="mt-1 btn-block"
                 size="lg"
@@ -43,6 +70,7 @@ class CheckIn extends Component {
 }
 
 CheckIn.propTypes = {
+  onPatientNotFound: PropTypes.func.isRequired,
   onCheckIn: PropTypes.func.isRequired
 };
 
