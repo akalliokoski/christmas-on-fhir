@@ -15,8 +15,8 @@ class App extends Component {
     this.setState({ patientId: id, patient: null });
   };
 
-  handleCheckIn = () => {
-    this.setState({ checkedIn: true });
+  handleCheckIn = patient => {
+    this.setState({ patient });
   };
 
   reset = () => {
