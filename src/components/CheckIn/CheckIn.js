@@ -1,13 +1,14 @@
 import React, { Component } from "react";
+import { Button } from "reactstrap";
 
 export default class CheckIn extends Component {
   render() {
     const { onCheckIn } = this.props;
     return (
       <div>
-        <button className="btn primary-button" onClick={onCheckIn}>
+        <Button color="primary" onClick={onCheckIn}>
           Check-In
-        </button>
+        </Button>
       </div>
     );
   }
