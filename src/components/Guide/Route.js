@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-class Path extends Component {
+class Route extends Component {
   render() {
     const points = [...this.props.points];
     const d = points
@@ -13,8 +13,8 @@ class Path extends Component {
   }
 }
 
-Path.propTypes = {
+Route.propTypes = {
   points: PropTypes.array.isRequired
 };
 
-export default Path;
+export default Route;

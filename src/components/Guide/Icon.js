@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-class Room extends Component {
+class Icon extends Component {
   render() {
     const { x, y, icon } = this.props;
     const { width, height, href } = icon;
@@ -21,10 +21,10 @@ class Room extends Component {
   }
 }
 
-Room.propTypes = {
+Icon.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   icon: PropTypes.object.isRequired
 };
 
-export default Room;
+export default Icon;

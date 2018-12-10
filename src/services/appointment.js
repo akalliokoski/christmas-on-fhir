@@ -12,6 +12,7 @@ export const getAppointment = patient => {
     id: "",
     start: Date.now(),
     end: Date.now() + 10000,
-    practitionerId: ""
+    practitionerId: "Dr",
+    roomId: "100"
   };
 };

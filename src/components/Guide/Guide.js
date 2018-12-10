@@ -1,68 +1,41 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Background from "./Background";
-import Room from "./Room";
-import Path from "./Path";
+import Icon from "./Icon";
+import Route from "./Route";
 import "../../assets/twitter.svg";
 import "../../assets/facebook.svg";
 
-const initialState = {
-  canvas: {
-    width: 640,
-    height: 320
-  },
-  icons: {
-    twitter: {
-      width: 50,
-      height: 50,
-      href: "#twitter"
-    },
-    facebook: {
-      width: 50,
-      height: 50,
-      href: "#facebook"
-    }
-  },
-  rooms: [
-    {
-      id: "A1",
-      x: 100,
-      y: 100,
-      icon: "twitter"
-    },
-    {
-      id: "B2",
-      x: 540,
-      y: 220,
-      icon: "facebook"
-    }
-  ],
-  path: [[100, 100], [540, 100], [540, 220]]
-};
-
 class Guide extends Component {
-  state = initialState;
-
-  renderRoom(room) {
-    const { id, x, y, icon } = room;
-    const { icons } = this.state;
-    const iconObject = icons[icon];
-
-    return <Room key={id} x={x} y={y} icon={iconObject} />;
-  }
-
   render() {
-    const { width, height } = this.state.canvas;
-    const { rooms, path } = this.state;
+    const { config, routeId } = this.props;
+    const { icons, canvas } = config;
+    const { width, height } = canvas;
+
+    const route = config.routes[routeId];
+    if (!route) {
+      return <div>Route not found</div>;
+    }
+
+    const start = route[0];
+    const dest = route[route.length - 1];
+
     return (
       <div className="guide">
         <svg width={width} height={height}>
           <Background width={width} height={height} />
-          {rooms.map(room => this.renderRoom(room))}
-          <Path points={path} />
+          <Icon x={start[0]} y={start[1]} icon={icons.start} />
+          <Icon x={dest[0]} y={dest[1]} icon={icons.destination} />
+          <Route points={route} />
         </svg>
       </div>
     );
   }
 }
+
+Guide.propTypes = {
+  config: PropTypes.object.isRequired,
+  routeId: PropTypes.string.isRequired
+};
 
 export default Guide;

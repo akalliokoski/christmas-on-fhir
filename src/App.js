@@ -5,11 +5,13 @@ import AppointmentNotFound from "./components/CheckIn/AppointmentNotFound";
 import Guide from "./components/Guide/Guide";
 import { getPatient } from "./services/patient";
 import { getAppointment } from "./services/appointment";
+import GuideConfiguration from "./config/guide";
 
 const initialState = {
   patientId: null,
   patient: null,
-  appointment: null
+  appointment: null,
+  room: null
 };
 
 class App extends Component {
@@ -39,7 +41,7 @@ class App extends Component {
       return <AppointmentNotFound onClose={this.reset} />;
     }
 
-    return <Guide />;
+    return <Guide config={GuideConfiguration} routeId={appointment.roomId} />;
   }
 
   render() {
