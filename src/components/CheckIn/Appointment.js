@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Card, CardTitle } from "reactstrap";
 import PropTypes from "prop-types";
+import Card from "./Card";
 
 class Appointment extends Component {
   renderPatient(patient) {
@@ -53,8 +53,6 @@ class Appointment extends Component {
       return null;
     }
 
-    console.log();
-
     return (
       <tr>
         <td>Time</td>
@@ -64,12 +62,15 @@ class Appointment extends Component {
   }
 
   render() {
-    const { room, practitioner, patient, appointment } = this.props;
+    const { room, practitioner, patient, appointment, onClose } = this.props;
     return (
       <div className="appointment-guide">
-        <Card body className="text-center">
-          <CardTitle>Appointment</CardTitle>
-          <table className="table">
+        <Card
+          title={<span>Appointment</span>}
+          actionButtonText="Close"
+          onAction={onClose}
+        >
+          <table className="table text-left">
             <tbody>
               {this.renderPatient(patient)}
               {this.renderTime(appointment)}
@@ -87,7 +88,8 @@ Appointment.propTypes = {
   appointment: PropTypes.object.isRequired,
   patient: PropTypes.object.isRequired,
   practitioner: PropTypes.object.isRequired,
-  room: PropTypes.object.isRequired
+  room: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired
 };
 
 export default Appointment;

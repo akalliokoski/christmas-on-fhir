@@ -1,24 +1,18 @@
 import React, { Component } from "react";
-import { Button, Card, CardTitle, CardText } from "reactstrap";
 import PropTypes from "prop-types";
+import Card from "./Card";
 
 class PatientNotFound extends Component {
   render() {
     const { patientId, onClose } = this.props;
     return (
       <div>
-        <Card body className="text-center">
-          <CardTitle>Patient ID "{patientId}" was not found</CardTitle>
-          <CardText>Please contact the reception.</CardText>
-          <Button
-            className="mt-1 btn-block"
-            size="lg"
-            color="primary"
-            onClick={onClose}
-          >
-            Close
-          </Button>
-        </Card>
+        <Card
+          title={<span>Patient ID {patientId} was not found</span>}
+          infoText={<span>Please contact the reception.</span>}
+          actionButtonText="Close"
+          onAction={onClose}
+        />
       </div>
     );
   }

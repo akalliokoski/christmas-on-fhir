@@ -1,14 +1,7 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Card,
-  CardTitle,
-  CardText,
-  Form,
-  FormGroup,
-  Input
-} from "reactstrap";
+import { Button, Form, FormGroup, Input } from "reactstrap";
 import PropTypes from "prop-types";
+import Card from "./Card";
 
 class CheckIn extends Component {
   state = { id: "" };
@@ -28,9 +21,10 @@ class CheckIn extends Component {
   render() {
     return (
       <div className="check-in">
-        <Card body className="text-center">
-          <CardTitle>Check-In</CardTitle>
-          <CardText>Please type your ID</CardText>
+        <Card
+          title={<span>Check-in</span>}
+          infoText={<span>Please type your ID</span>}
+        >
           <Form onSubmit={this.onSubmit}>
             <FormGroup>
               <Input
@@ -45,7 +39,7 @@ class CheckIn extends Component {
                 color="primary"
                 type="submit"
               >
-                Check-In
+                Check in
               </Button>
             </FormGroup>
           </Form>

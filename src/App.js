@@ -22,7 +22,7 @@ class App extends Component {
   handleCheckIn = id => {
     const patient = getPatient(id);
     const appointment = patient ? getAppointment(patient) : null;
-    this.setState({ patient, appointment });
+    this.setState({ patientId: id, patient, appointment });
   };
 
   reset = () => {
@@ -51,6 +51,7 @@ class App extends Component {
         patient={patient}
         practitioner={practitioner}
         room={room}
+        onClose={this.reset}
       />
     );
   }
