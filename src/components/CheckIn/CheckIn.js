@@ -27,7 +27,7 @@ class CheckIn extends Component {
 
   render() {
     return (
-      <div>
+      <div className="check-in">
         <Card body className="text-center">
           <CardTitle>Check-In</CardTitle>
           <CardText>Please type your ID</CardText>

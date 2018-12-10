@@ -4,5 +4,5 @@ export const getPatient = id => {
     return null;
   }
 
-  return { id: parsed };
+  return { id: parsed, firstName: "Bart", lastName: "Simpson" };
 };

@@ -10,9 +10,24 @@ export const getAppointment = patient => {
 
   return {
     id: "",
-    start: Date.now(),
-    end: Date.now() + 10000,
+    start: new Date(),
+    end: new Date() + 10000,
     practitionerId: "Dr",
     roomId: "100"
+  };
+};
+
+export const getPractitioner = appointment => {
+  return {
+    id: appointment.practitionerId,
+    firstName: "Homer",
+    lastName: "Simpson"
+  };
+};
+
+export const getRoom = appointment => {
+  return {
+    id: appointment.roomId,
+    info: "1st Floor"
   };
 };

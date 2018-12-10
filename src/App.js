@@ -2,16 +2,18 @@ import React, { Component } from "react";
 import CheckIn from "./components/CheckIn/CheckIn";
 import PatientNotFound from "./components/CheckIn/PatientNotFound";
 import AppointmentNotFound from "./components/CheckIn/AppointmentNotFound";
-import Guide from "./components/Guide/Guide";
+import Appointment from "./components/CheckIn/Appointment";
 import { getPatient } from "./services/patient";
-import { getAppointment } from "./services/appointment";
-import GuideConfiguration from "./config/guide";
+import {
+  getAppointment,
+  getPractitioner,
+  getRoom
+} from "./services/appointment";
 
 const initialState = {
   patientId: null,
   patient: null,
-  appointment: null,
-  room: null
+  appointment: null
 };
 
 class App extends Component {
@@ -41,7 +43,16 @@ class App extends Component {
       return <AppointmentNotFound onClose={this.reset} />;
     }
 
-    return <Guide config={GuideConfiguration} routeId={appointment.roomId} />;
+    const practitioner = getPractitioner(appointment);
+    const room = getRoom(appointment);
+    return (
+      <Appointment
+        appointment={appointment}
+        patient={patient}
+        practitioner={practitioner}
+        room={room}
+      />
+    );
   }
 
   render() {
