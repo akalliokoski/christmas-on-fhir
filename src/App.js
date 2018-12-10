@@ -3,17 +3,20 @@ import CheckIn from "./components/CheckIn/CheckIn";
 import PatientNotFound from "./components/CheckIn/PatientNotFound";
 import AppointmentNotFound from "./components/CheckIn/AppointmentNotFound";
 import Appointment from "./components/CheckIn/Appointment";
+import Guide from "./components/Guide/Guide";
 import { getPatient } from "./services/patient";
 import {
   getAppointment,
   getPractitioner,
   getRoom
 } from "./services/appointment";
+import GuideConfiguration from "./config/guide";
 
 const initialState = {
   patientId: null,
   patient: null,
-  appointment: null
+  appointment: null,
+  showDirections: false
 };
 
 class App extends Component {
@@ -29,8 +32,12 @@ class App extends Component {
     this.setState(initialState);
   };
 
+  showDirections = () => {
+    this.setState({ showDirections: true });
+  };
+
   renderComponent() {
-    const { patientId, patient, appointment } = this.state;
+    const { patientId, patient, appointment, showDirections } = this.state;
     if (!patientId && !patient) {
       return <CheckIn onCheckIn={this.handleCheckIn} />;
     }
@@ -43,8 +50,17 @@ class App extends Component {
       return <AppointmentNotFound onClose={this.reset} />;
     }
 
-    const practitioner = getPractitioner(appointment);
     const room = getRoom(appointment);
+    if (showDirections && room) {
+      return (
+        <Guide config={GuideConfiguration} routeId={room.id}>
+          {" "}
+        </Guide>
+      );
+    }
+
+    const practitioner = getPractitioner(appointment);
+
     return (
       <Appointment
         appointment={appointment}
@@ -52,6 +68,7 @@ class App extends Component {
         practitioner={practitioner}
         room={room}
         onClose={this.reset}
+        onShowDirections={this.showDirections}
       />
     );
   }

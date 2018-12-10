@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 import Card from "./Card";
 
@@ -14,6 +15,7 @@ class Appointment extends Component {
         <td>
           {patient.lastName}, {patient.firstName}
         </td>
+        <td />
       </tr>
     );
   }
@@ -29,11 +31,12 @@ class Appointment extends Component {
         <td>
           {practitioner.lastName}, {practitioner.firstName}
         </td>
+        <td />
       </tr>
     );
   }
 
-  renderRoom(room) {
+  renderRoom(room, onShowDirections) {
     if (!room) {
       return null;
     }
@@ -42,7 +45,17 @@ class Appointment extends Component {
       <tr>
         <td>Room</td>
         <td>
-          {room.id}, {room.info}
+          {room.id}, {room.info}{" "}
+        </td>
+        <td>
+          <Button
+            className=""
+            size="sm"
+            color="info"
+            onClick={onShowDirections}
+          >
+            Show on Map
+          </Button>
         </td>
       </tr>
     );
@@ -57,12 +70,20 @@ class Appointment extends Component {
       <tr>
         <td>Time</td>
         <td>{appointment.start.toLocaleString()}</td>
+        <td />
       </tr>
     );
   }
 
   render() {
-    const { room, practitioner, patient, appointment, onClose } = this.props;
+    const {
+      room,
+      practitioner,
+      patient,
+      appointment,
+      onClose,
+      onShowDirections
+    } = this.props;
     return (
       <div className="appointment-guide">
         <Card
@@ -75,7 +96,7 @@ class Appointment extends Component {
               {this.renderPatient(patient)}
               {this.renderTime(appointment)}
               {this.renderPractitioner(practitioner)}
-              {this.renderRoom(room)}
+              {this.renderRoom(room, onShowDirections)}
             </tbody>
           </table>
         </Card>
@@ -89,7 +110,8 @@ Appointment.propTypes = {
   patient: PropTypes.object.isRequired,
   practitioner: PropTypes.object.isRequired,
   room: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  onShowDirections: PropTypes.func.isRequired
 };
 
 export default Appointment;
