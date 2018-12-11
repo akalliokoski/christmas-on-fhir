@@ -3,14 +3,14 @@ import CheckIn from "./components/CheckIn/CheckIn";
 import PatientNotFound from "./components/CheckIn/PatientNotFound";
 import AppointmentNotFound from "./components/CheckIn/AppointmentNotFound";
 import Appointment from "./components/CheckIn/Appointment";
-import Guide from "./components/Guide/Guide";
+import Map from "./components/Map/Map";
 import { getPatient } from "./services/patient";
 import {
   getAppointment,
   getPractitioner,
   getRoom
 } from "./services/appointment";
-import GuideConfiguration from "./config/guide";
+import MapConfig from "./config/map";
 
 const initialState = {
   patientId: null,
@@ -53,9 +53,12 @@ class App extends Component {
     const room = getRoom(appointment);
     if (showDirections && room) {
       return (
-        <Guide config={GuideConfiguration} routeId={room.id}>
-          {" "}
-        </Guide>
+        <Map
+          title={<span>Room {room.id}</span>}
+          config={MapConfig}
+          routeId={room.id}
+          onClose={this.reset}
+        />
       );
     }
 
