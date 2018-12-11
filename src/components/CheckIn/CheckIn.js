@@ -19,6 +19,7 @@ class CheckIn extends Component {
   };
 
   render() {
+    const { id } = this.state;
     return (
       <div className="check-in">
         <Card
@@ -29,7 +30,7 @@ class CheckIn extends Component {
             <FormGroup>
               <Input
                 bsSize="lg"
-                value={this.state.id}
+                value={id}
                 onChange={this.handleIdChange}
                 className="text-center"
               />
@@ -38,6 +39,7 @@ class CheckIn extends Component {
                 size="lg"
                 color="primary"
                 type="submit"
+                disabled={!id}
               >
                 Check in
               </Button>
