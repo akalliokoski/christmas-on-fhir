@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 import Card from "./Card";
 
-class Appointment extends Component {
+class AppointmentView extends Component {
   renderPatient(patient) {
     if (!patient) {
       return null;
@@ -105,7 +105,7 @@ class Appointment extends Component {
   }
 }
 
-Appointment.propTypes = {
+AppointmentView.propTypes = {
   appointment: PropTypes.object,
   patient: PropTypes.object,
   practitioner: PropTypes.object,
@@ -114,4 +114,4 @@ Appointment.propTypes = {
   onShowDirections: PropTypes.func.isRequired
 };
 
-export default Appointment;
+export default AppointmentView;

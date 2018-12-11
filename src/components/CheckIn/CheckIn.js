@@ -1,67 +1,90 @@
 import React, { Component } from "react";
-import { Form, FormGroup, Input } from "reactstrap";
 import PropTypes from "prop-types";
-import Card from "./Card";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import CheckInPrompt from "./CheckInPrompt";
+import AppointmentNotFound from "./AppointmentNotFound";
+import AppointmentView from "./AppointmentView";
+import Map from "../Map/Map";
+import MapConfig from "../../config/map";
+
+export const STATUS = {
+  CHECK_IN: "CHECK_IN",
+  APPOINTMENT_NOT_FOUND: "APPOINTMENT_NOT_FOUND",
+  CHECKED_IN: "CHECKED_IN",
+  CHECKED_IN_MAP: "CHECKED_IN_MAP"
+};
 
 class CheckIn extends Component {
-  state = { id: "" };
+  constructor() {
+    super();
 
-  onSubmit = e => {
-    e.preventDefault();
+    this.STATUS_TO_RENDERER = {
+      [STATUS.CHECK_IN]: this.renderCheckIn,
+      [STATUS.APPOINTMENT_NOT_FOUND]: this.renderAppointmentNotFound,
+      [STATUS.CHECKED_IN]: this.renderAppointment,
+      [STATUS.CHECKED_IN_MAP]: this.renderMap
+    };
+  }
 
-    const { isLoading, onCheckIn } = this.props;
-    if (isLoading) {
-      return;
+  renderCheckIn = ({ isLoading, onCheckIn }) => (
+    <CheckInPrompt isLoading={isLoading} onCheckIn={onCheckIn} />
+  );
+
+  renderAppointmentNotFound = ({ onClose }) => (
+    <AppointmentNotFound onClose={onClose} />
+  );
+
+  renderAppointment = ({
+    appointment,
+    patient,
+    practitioner,
+    room,
+    onClose,
+    onShowMap
+  }) => (
+    <AppointmentView
+      appointment={appointment}
+      patient={patient}
+      practitioner={practitioner}
+      room={room}
+      onClose={onClose}
+      onShowDirections={onShowMap}
+    />
+  );
+
+  renderMap = ({ room, onClose }) => (
+    <Map
+      title={<span>Room {room.id}</span>}
+      config={MapConfig}
+      routeId={room.id}
+      onClose={onClose}
+    />
+  );
+
+  renderComponent(props) {
+    const { status } = props;
+    const renderer = this.STATUS_TO_RENDERER[status];
+    if (!renderer) {
+      throw new Error(`Invalid status ${status}`);
     }
 
-    const { id } = this.state;
-    onCheckIn(id);
-  };
-
-  handleIdChange = event => {
-    this.setState({ id: event.target.value });
-  };
+    return renderer(props);
+  }
 
   render() {
-    const { id } = this.state;
-    const { isLoading } = this.props;
-    return (
-      <div className="check-in">
-        <Card
-          title={<span>Check-in</span>}
-          infoText={<span>Please type your ID</span>}
-        >
-          <Form onSubmit={this.onSubmit}>
-            <FormGroup>
-              <Input
-                bsSize="lg"
-                value={id}
-                onChange={this.handleIdChange}
-                className="text-center"
-              />
-              <button
-                className="btn btn-primary btn-lg mt-1 btn-block"
-                type="submit"
-                disabled={!id}
-              >
-                {isLoading ? (
-                  <FontAwesomeIcon icon={faCircleNotch} spin />
-                ) : (
-                  "Check in"
-                )}
-              </button>
-            </FormGroup>
-          </Form>
-        </Card>
-      </div>
-    );
+    return <div className="App">{this.renderComponent(this.props)}</div>;
   }
 }
 
 CheckIn.propTypes = {
-  onCheckIn: PropTypes.func.isRequired
+  status: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool,
+  patient: PropTypes.object,
+  appointment: PropTypes.object,
+  room: PropTypes.object,
+  practitioner: PropTypes.object,
+  onCheckIn: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onShowMap: PropTypes.func.isRequired
 };
 
 export default CheckIn;
