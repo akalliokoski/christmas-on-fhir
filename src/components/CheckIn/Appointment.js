@@ -106,10 +106,10 @@ class Appointment extends Component {
 }
 
 Appointment.propTypes = {
-  appointment: PropTypes.object.isRequired,
-  patient: PropTypes.object.isRequired,
-  practitioner: PropTypes.object.isRequired,
-  room: PropTypes.object.isRequired,
+  appointment: PropTypes.object,
+  patient: PropTypes.object,
+  practitioner: PropTypes.object,
+  room: PropTypes.object,
   onClose: PropTypes.func.isRequired,
   onShowDirections: PropTypes.func.isRequired
 };
