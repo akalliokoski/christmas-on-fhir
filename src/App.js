@@ -69,7 +69,9 @@ class App extends Component {
     this.setState({ status: STATUS.CHECKED_IN_MAP });
   };
 
-  renderCheckIn = () => <CheckIn onCheckIn={this.handleCheckIn} />;
+  renderCheckIn = ({ isLoading }) => (
+    <CheckIn isLoading={isLoading} onCheckIn={this.handleCheckIn} />
+  );
 
   renderAppointmentNotFound = () => (
     <AppointmentNotFound onClose={this.reset} />

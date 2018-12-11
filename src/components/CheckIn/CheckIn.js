@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Button, Form, FormGroup, Input } from "reactstrap";
+import { Form, FormGroup, Input } from "reactstrap";
 import PropTypes from "prop-types";
 import Card from "./Card";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 class CheckIn extends Component {
   state = { id: "" };
@@ -9,7 +11,11 @@ class CheckIn extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { onCheckIn } = this.props;
+    const { isLoading, onCheckIn } = this.props;
+    if (isLoading) {
+      return;
+    }
+
     const { id } = this.state;
     onCheckIn(id);
   };
@@ -20,6 +26,7 @@ class CheckIn extends Component {
 
   render() {
     const { id } = this.state;
+    const { isLoading } = this.props;
     return (
       <div className="check-in">
         <Card
@@ -34,15 +41,17 @@ class CheckIn extends Component {
                 onChange={this.handleIdChange}
                 className="text-center"
               />
-              <Button
-                className="mt-1 btn-block"
-                size="lg"
-                color="primary"
+              <button
+                className="btn btn-primary btn-lg mt-1 btn-block"
                 type="submit"
                 disabled={!id}
               >
-                Check in
-              </Button>
+                {isLoading ? (
+                  <FontAwesomeIcon icon={faCircleNotch} spin />
+                ) : (
+                  "Check in"
+                )}
+              </button>
             </FormGroup>
           </Form>
         </Card>
