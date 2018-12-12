@@ -1,17 +1,15 @@
-export const getPatient = async id => {
+import { Patient, Appointment, Practitioner, Room } from "../models";
+
+export async function getPatient(id) {
   const parsedId = Number(id);
   if (isNaN(parsedId)) {
     return null;
   }
 
-  return {
-    id: parsedId,
-    firstName: "Bart",
-    lastName: "Simpson"
-  };
-};
+  return new Patient(parsedId, "Bart", "Simpson");
+}
 
-export const getAppointment = async patient => {
+export async function getAppointment(patient) {
   if (!patient) {
     return null;
   }
@@ -22,34 +20,21 @@ export const getAppointment = async patient => {
     return null;
   }
 
-  return {
-    id: "",
-    start: new Date(),
-    end: new Date() + 10000,
-    practitionerId: "Dr",
-    roomId: "100"
-  };
-};
+  return new Appointment("", new Date(), new Date() + 10000, "Dr", "100");
+}
 
-export const getPractitioner = async appointment => {
+export async function getPractitioner(appointment) {
   if (!appointment) {
     return null;
   }
 
-  return {
-    id: appointment.practitionerId,
-    firstName: "Homer",
-    lastName: "Simpson"
-  };
-};
+  return new Practitioner(appointment.practitionerId, "Homer", "Simpson");
+}
 
-export const getRoom = async appointment => {
+export async function getRoom(appointment) {
   if (!appointment) {
     return null;
   }
 
-  return {
-    id: appointment.roomId,
-    info: "1st Floor"
-  };
-};
+  return new Room(appointment.roomId, "1st Floor");
+}

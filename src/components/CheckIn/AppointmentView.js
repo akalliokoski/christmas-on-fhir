@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 import Card from "./Card";
+import { Patient, Appointment, Practitioner, Room } from "../../models";
 
 class AppointmentView extends Component {
   renderPatient(patient) {
@@ -106,10 +107,10 @@ class AppointmentView extends Component {
 }
 
 AppointmentView.propTypes = {
-  appointment: PropTypes.object,
-  patient: PropTypes.object,
-  practitioner: PropTypes.object,
-  room: PropTypes.object,
+  appointment: PropTypes.instanceOf(Appointment),
+  patient: PropTypes.instanceOf(Patient),
+  practitioner: PropTypes.instanceOf(Practitioner),
+  room: PropTypes.instanceOf(Room),
   onClose: PropTypes.func.isRequired,
   onShowDirections: PropTypes.func.isRequired
 };
