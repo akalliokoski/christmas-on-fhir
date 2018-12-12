@@ -1,0 +1,15 @@
+{
+  "resourceType": "Patient",
+  "identifier": [
+    {
+      "system": "http://fhirtutorial.example/patient",
+      "value": "12345"
+    }
+  ],
+  "name": [
+    {
+      "family": "Simpson",
+      "given": ["Bart"]
+    }
+  ]
+}
