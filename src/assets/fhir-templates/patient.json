@@ -6,6 +6,8 @@
       "value": "12345"
     }
   ],
+  "active": true,
+  "gender": "male",
   "name": [
     {
       "family": "Simpson",

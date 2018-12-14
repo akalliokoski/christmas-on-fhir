@@ -1,0 +1,23 @@
+{
+  "resourceType": "Appointment",
+  "id": "887899",
+  "meta": { "versionId": "1", "lastUpdated": "2018-12-14T12:00:13.257+00:00" },
+  "status": "booked",
+  "participant": [
+    {
+      "actor": { "reference": "Patient/887900", "display": "" },
+      "required": "required",
+      "status": "accepted"
+    },
+    {
+      "actor": { "reference": "Practitioner/887898", "display": "" },
+      "required": "required",
+      "status": "accepted"
+    },
+    {
+      "actor": { "reference": "Location/887897", "display": "100, 1st floor" },
+      "required": "required",
+      "status": "accepted"
+    }
+  ]
+}
