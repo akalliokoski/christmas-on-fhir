@@ -3,26 +3,21 @@ const jsonfile = require("jsonfile");
 const path = require("path");
 
 const TYPES = {
-  Patient: "Patient"
+  Patient: "Patient",
+  Practitioner: "Practitioner"
 };
 
 const TEMPLATES_DIR = path.resolve("./src/assets/fhir-templates");
-const TYPE_TO_TEMPLATE = {
-  [TYPES.Patient]: "patient.json"
-};
-
 const FHIR_BASE = "http://hapi.fhir.org/baseDstu3";
 
-const DEFAULT_RESOURCE_IDS = {
-  [TYPES.Patient]: "857425"
-};
-
-const OUTPUT_FILE = path.resolve("./src/assets/fhir-resources.json");
+const RESOURCE_IDS_FILE = path.resolve("./src/assets/fhir-resources.json");
 
 const readTemplate = async type => {
-  const filename = TYPE_TO_TEMPLATE[type];
-  const filepath = path.resolve(TEMPLATES_DIR, filename);
-  return jsonfile.readFile(filepath);
+  const filepath = path.resolve(TEMPLATES_DIR, `${type}.json`);
+  return jsonfile.readFile(filepath).catch(() => {
+    console.log(`Template not found for resource ${type}`);
+    return null;
+  });
 };
 
 const getResourceUrl = (type, id = null, { jsonFormat = false } = {}) => {
@@ -44,46 +39,61 @@ const fetchResourceFromServer = async (type, id) => {
 };
 
 const createResourceOnServer = async resource => {
-  await axios.post(getResourceUrl(resource.resourceType), resource);
+  return await axios
+    .post(getResourceUrl(resource.resourceType), resource)
+    .then(response => response.data);
 };
 
-const getDefaultResource = async type => {
-  const id = DEFAULT_RESOURCE_IDS[type];
+const getResource = async (type, id) => {
+  if (id === null || id === undefined) {
+    return null;
+  }
+
   return fetchResourceFromServer(type, id)
     .then(response => response.data)
     .catch(() => null);
 };
 
 const createResource = async type => {
-  const template = await readTemplate(type);
+  const template = (await readTemplate(type)) || {};
   const created = await createResourceOnServer(template);
   return fetchResourceFromServer(type, created.id).then(
     response => response.data
   );
 };
 
-const getOrCreateResource = async type => {
-  return (await getDefaultResource(type)) || (await createResource(type));
+const getOrCreateResource = async (type, resourceIds) => {
+  return (
+    (await getResource(type, resourceIds[type])) || (await createResource(type))
+  );
 };
 
-const getResourceIds = resources => {
-  return resources.reduce((acc, { resourceType, id }) => {
-    let arr = acc[resourceType];
-    if (!arr) {
-      arr = [];
-      acc[resourceType] = arr;
-    }
+const getPreviousResourceIds = async () => {
+  return (await jsonfile.readFile(RESOURCE_IDS_FILE).catch(() => {})) || {};
+};
 
-    arr.push(id);
+const writeResourceIds = async resources => {
+  const resourceIds = resources.reduce((acc, { resourceType, id }) => {
+    acc[resourceType] = id;
     return acc;
   }, {});
+  jsonfile.writeFile(RESOURCE_IDS_FILE, resourceIds);
 };
 
 const main = async () => {
-  const patient = await getOrCreateResource(TYPES.Patient);
-  const output = getResourceIds([patient]);
-  console.log(output);
-  return jsonfile.writeFile(OUTPUT_FILE, output);
+  const resourceIds = getPreviousResourceIds();
+  const resources = [
+    await getOrCreateResource(TYPES.Patient, resourceIds),
+    await getOrCreateResource(TYPES.Practitioner, resourceIds)
+  ];
+
+  writeResourceIds(resources);
+
+  resources.forEach(resource =>
+    console.log(
+      `${resource.id}: ${getResourceUrl(resource.resourceType, resource.id)}`
+    )
+  );
 };
 
 main();
