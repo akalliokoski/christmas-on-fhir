@@ -71,7 +71,8 @@
     "test": "node scripts/test.js",
     "precommit": "pretty-quick --staged",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "create-resources": "node scripts/create-resources.js"
   },
   "eslintConfig": {
     "extends": "react-app"
