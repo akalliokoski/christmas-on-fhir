@@ -2,9 +2,11 @@ const axios = require("axios");
 const jsonfile = require("jsonfile");
 const path = require("path");
 
-const TYPES = {
+const RESOURCE_TYPES = {
   Patient: "Patient",
-  Practitioner: "Practitioner"
+  Practitioner: "Practitioner",
+  Location: "Location",
+  Appointment: "Appointment"
 };
 
 const TEMPLATES_DIR = path.resolve("./src/assets/fhir-templates");
@@ -81,17 +83,22 @@ const writeResourceIds = async resources => {
 };
 
 const main = async () => {
-  const resourceIds = getPreviousResourceIds();
-  const resources = [
-    await getOrCreateResource(TYPES.Patient, resourceIds),
-    await getOrCreateResource(TYPES.Practitioner, resourceIds)
-  ];
+  const resourceIds = await getPreviousResourceIds();
+  const resourceTypes = Object.values(RESOURCE_TYPES);
+  const resources = await Promise.all(
+    resourceTypes.map(resourceType =>
+      getOrCreateResource(resourceType, resourceIds)
+    )
+  );
 
   writeResourceIds(resources);
 
   resources.forEach(resource =>
     console.log(
-      `${resource.id}: ${getResourceUrl(resource.resourceType, resource.id)}`
+      `${resource.resourceType} ${resource.id}: ${getResourceUrl(
+        resource.resourceType,
+        resource.id
+      )}`
     )
   );
 };
