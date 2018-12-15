@@ -33,13 +33,16 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <CheckIn
-          {...this.state}
-          onCheckIn={this.handleCheckIn}
-          onClose={this.reset}
-          onShowMap={this.handleShowMap}
-        />
+      <div className="App cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <div className="cover">
+          <CheckIn
+            className="lead"
+            {...this.state}
+            onCheckIn={this.handleCheckIn}
+            onClose={this.reset}
+            onShowMap={this.handleShowMap}
+          />
+        </div>
       </div>
     );
   }
