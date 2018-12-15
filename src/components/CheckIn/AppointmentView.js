@@ -3,46 +3,54 @@ import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 import Card from "./Card";
 import { RESOURCE_TYPE } from "../../constants";
+import {
+  findParticipant,
+  getParticipantDisplay,
+  getParticipantUrl
+} from "../../utils/fhirUtils";
 
 class AppointmentView extends Component {
-  findParticipant(resourceType, { participant }) {
-    return participant.find(p => p.actor.reference.includes(resourceType));
-  }
-  renderPatient(appointment) {
-    const patient = this.findParticipant(RESOURCE_TYPE.Patient, appointment);
-    if (!patient) {
+  renderParticipant(resourceType, name, appointment) {
+    const participant = findParticipant(resourceType, appointment);
+    if (!participant) {
       return null;
     }
 
     return (
       <tr>
-        <td>Customer</td>
-        <td>{patient.actor.display}</td>
+        <td>{name}</td>
+        <td>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={getParticipantUrl(participant)}
+          >
+            {getParticipantDisplay(participant)}
+          </a>
+        </td>
         <td />
       </tr>
+    );
+  }
+
+  renderPatient(appointment) {
+    return this.renderParticipant(
+      RESOURCE_TYPE.Patient,
+      "Customer",
+      appointment
     );
   }
 
   renderPractitioner(appointment) {
-    const practitioner = this.findParticipant(
+    return this.renderParticipant(
       RESOURCE_TYPE.Practitioner,
+      "Practitioner",
       appointment
-    );
-    if (!practitioner) {
-      return null;
-    }
-
-    return (
-      <tr>
-        <td>Practitioner</td>
-        <td>{practitioner.actor.display}</td>
-        <td />
-      </tr>
     );
   }
 
   renderLocation(appointment, onShowDirections) {
-    const location = this.findParticipant(RESOURCE_TYPE.Location, appointment);
+    const location = findParticipant(RESOURCE_TYPE.Location, appointment);
     if (!location) {
       return null;
     }
@@ -50,7 +58,7 @@ class AppointmentView extends Component {
     return (
       <tr>
         <td>Room</td>
-        <td>{location.actor.display}</td>
+        <td>{getParticipantDisplay(location)}</td>
         <td>
           <Button
             className=""
