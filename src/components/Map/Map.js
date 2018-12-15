@@ -24,7 +24,6 @@ class Map extends Component {
 Map.propTypes = {
   title: PropTypes.element.isRequired,
   config: PropTypes.object.isRequired,
-  routeId: PropTypes.string.isRequired,
   onClose: PropTypes.func
 };
 

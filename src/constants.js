@@ -1,0 +1,10 @@
+export const FHIR_BASE = "http://hapi.fhir.org/baseDstu3";
+
+export const RESOURCE_TYPE = {
+  Patient: "Patient",
+  Practitioner: "Practitioner",
+  Location: "Location",
+  Appointment: "Appointment"
+};
+
+export const SECRET_IDENTIFIER = "555555-555";

@@ -2,10 +2,14 @@ import React, { Component } from "react";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 import Card from "./Card";
-import { Patient, Appointment, Practitioner, Room } from "../../models";
+import { RESOURCE_TYPE } from "../../constants";
 
 class AppointmentView extends Component {
-  renderPatient(patient) {
+  findParticipant(resourceType, { participant }) {
+    return participant.find(p => p.actor.reference.includes(resourceType));
+  }
+  renderPatient(appointment) {
+    const patient = this.findParticipant(RESOURCE_TYPE.Patient, appointment);
     if (!patient) {
       return null;
     }
@@ -13,15 +17,17 @@ class AppointmentView extends Component {
     return (
       <tr>
         <td>Customer</td>
-        <td>
-          {patient.lastName}, {patient.firstName}
-        </td>
+        <td>{patient.actor.display}</td>
         <td />
       </tr>
     );
   }
 
-  renderPractitioner(practitioner) {
+  renderPractitioner(appointment) {
+    const practitioner = this.findParticipant(
+      RESOURCE_TYPE.Practitioner,
+      appointment
+    );
     if (!practitioner) {
       return null;
     }
@@ -29,25 +35,22 @@ class AppointmentView extends Component {
     return (
       <tr>
         <td>Practitioner</td>
-        <td>
-          {practitioner.lastName}, {practitioner.firstName}
-        </td>
+        <td>{practitioner.actor.display}</td>
         <td />
       </tr>
     );
   }
 
-  renderRoom(room, onShowDirections) {
-    if (!room) {
+  renderLocation(appointment, onShowDirections) {
+    const location = this.findParticipant(RESOURCE_TYPE.Location, appointment);
+    if (!location) {
       return null;
     }
 
     return (
       <tr>
         <td>Room</td>
-        <td>
-          {room.id}, {room.info}{" "}
-        </td>
+        <td>{location.actor.display}</td>
         <td>
           <Button
             className=""
@@ -63,7 +66,7 @@ class AppointmentView extends Component {
   }
 
   renderTime(appointment) {
-    if (!appointment) {
+    if (!appointment || !appointment.start) {
       return null;
     }
 
@@ -77,14 +80,7 @@ class AppointmentView extends Component {
   }
 
   render() {
-    const {
-      room,
-      practitioner,
-      patient,
-      appointment,
-      onClose,
-      onShowDirections
-    } = this.props;
+    const { appointment, onClose, onShowDirections } = this.props;
     return (
       <div className="appointment-guide">
         <Card
@@ -94,10 +90,10 @@ class AppointmentView extends Component {
         >
           <table className="table text-left">
             <tbody>
-              {this.renderPatient(patient)}
+              {this.renderPatient(appointment)}
               {this.renderTime(appointment)}
-              {this.renderPractitioner(practitioner)}
-              {this.renderRoom(room, onShowDirections)}
+              {this.renderPractitioner(appointment)}
+              {this.renderLocation(appointment, onShowDirections)}
             </tbody>
           </table>
         </Card>
@@ -107,10 +103,7 @@ class AppointmentView extends Component {
 }
 
 AppointmentView.propTypes = {
-  appointment: PropTypes.instanceOf(Appointment),
-  patient: PropTypes.instanceOf(Patient),
-  practitioner: PropTypes.instanceOf(Practitioner),
-  room: PropTypes.instanceOf(Room),
+  appointment: PropTypes.object,
   onClose: PropTypes.func.isRequired,
   onShowDirections: PropTypes.func.isRequired
 };

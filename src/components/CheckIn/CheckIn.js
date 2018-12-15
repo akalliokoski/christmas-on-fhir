@@ -33,31 +33,16 @@ class CheckIn extends Component {
     <AppointmentNotFound onClose={onClose} />
   );
 
-  renderAppointment = ({
-    appointment,
-    patient,
-    practitioner,
-    room,
-    onClose,
-    onShowMap
-  }) => (
+  renderAppointment = ({ appointment, onClose, onShowMap }) => (
     <AppointmentView
       appointment={appointment}
-      patient={patient}
-      practitioner={practitioner}
-      room={room}
       onClose={onClose}
       onShowDirections={onShowMap}
     />
   );
 
   renderMap = ({ room, onClose }) => (
-    <Map
-      title={<span>Room {room.id}</span>}
-      config={MapConfig}
-      routeId={room.id}
-      onClose={onClose}
-    />
+    <Map title={<span>Location</span>} config={MapConfig} onClose={onClose} />
   );
 
   renderComponent(props) {
@@ -78,10 +63,7 @@ class CheckIn extends Component {
 CheckIn.propTypes = {
   status: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
-  patient: PropTypes.object,
   appointment: PropTypes.object,
-  room: PropTypes.object,
-  practitioner: PropTypes.object,
   onCheckIn: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onShowMap: PropTypes.func.isRequired

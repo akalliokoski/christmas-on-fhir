@@ -1,40 +1,37 @@
-import { Patient, Appointment, Practitioner, Room } from "../models";
+import axios from "axios";
+import { FHIR_BASE, RESOURCE_TYPE } from "../constants";
 
-export async function getPatient(id) {
-  const parsedId = Number(id);
-  if (isNaN(parsedId)) {
+async function searchResource(url) {
+  const response = await axios.get(url).catch(err => {
+    console.log(`Failed to find resource ${url}`);
+    return null;
+  });
+
+  if (!response) {
     return null;
   }
 
-  return new Patient(parsedId, "Bart", "Simpson");
+  const bundle = response.data;
+  return bundle.entry.length === 1 ? bundle.entry[0].resource : null;
 }
 
-export async function getAppointment(patient) {
+async function searchPatient(patientIdentifier) {
+  const url = `${FHIR_BASE}/${
+    RESOURCE_TYPE.Patient
+  }?identifier=${patientIdentifier}`;
+  return searchResource(url);
+}
+
+async function searchAppointment(patientId) {
+  const url = `${FHIR_BASE}/${RESOURCE_TYPE.Appointment}?patient=${patientId}`;
+  return searchResource(url);
+}
+
+export async function getAppointment(patientIdentifier) {
+  const patient = await searchPatient(patientIdentifier);
   if (!patient) {
     return null;
   }
 
-  const { id } = patient;
-
-  if (id === 0) {
-    return null;
-  }
-
-  return new Appointment("", new Date(), new Date() + 10000, "Dr", "100");
-}
-
-export async function getPractitioner(appointment) {
-  if (!appointment) {
-    return null;
-  }
-
-  return new Practitioner(appointment.practitionerId, "Homer", "Simpson");
-}
-
-export async function getRoom(appointment) {
-  if (!appointment) {
-    return null;
-  }
-
-  return new Room(appointment.roomId, "1st Floor");
+  return await searchAppointment(patient.id);
 }

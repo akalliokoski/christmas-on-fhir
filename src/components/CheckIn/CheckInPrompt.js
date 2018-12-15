@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Card from "./Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import { SECRET_IDENTIFIER } from "../../constants";
 
 class CheckInPrompt extends Component {
   state = { id: "" };
@@ -40,6 +41,7 @@ class CheckInPrompt extends Component {
                 value={id}
                 onChange={this.handleIdChange}
                 className="text-center"
+                placeholder={SECRET_IDENTIFIER}
               />
               <button
                 className="btn btn-primary btn-lg mt-1 btn-block"
