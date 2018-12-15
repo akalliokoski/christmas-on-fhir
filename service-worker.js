@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/fhir-check-in/precache-manifest.9db94918bc7d2de6805886afdf91ca54.js"
+  "/christmas-on-fhir/precache-manifest.1c16742ad3218d6a7e337e106fdbfc6e.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/fhir-check-in/index.html", {
+workbox.routing.registerNavigationRoute("/christmas-on-fhir/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });

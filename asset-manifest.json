@@ -1,15 +1,15 @@
 {
-  "main.css": "/fhir-check-in/static/css/main.19fa031b.chunk.css",
-  "main.js": "/fhir-check-in/static/js/main.703f9604.chunk.js",
-  "main.js.map": "/fhir-check-in/static/js/main.703f9604.chunk.js.map",
-  "static/css/1.cffa9213.chunk.css": "/fhir-check-in/static/css/1.cffa9213.chunk.css",
-  "static/js/1.f26da8e0.chunk.js": "/fhir-check-in/static/js/1.f26da8e0.chunk.js",
-  "static/js/1.f26da8e0.chunk.js.map": "/fhir-check-in/static/js/1.f26da8e0.chunk.js.map",
-  "runtime~main.js": "/fhir-check-in/static/js/runtime~main.353862b8.js",
-  "runtime~main.js.map": "/fhir-check-in/static/js/runtime~main.353862b8.js.map",
-  "static/css/1.cffa9213.chunk.css.map": "/fhir-check-in/static/css/1.cffa9213.chunk.css.map",
-  "static/css/main.19fa031b.chunk.css.map": "/fhir-check-in/static/css/main.19fa031b.chunk.css.map",
-  "index.html": "/fhir-check-in/index.html",
-  "precache-manifest.9db94918bc7d2de6805886afdf91ca54.js": "/fhir-check-in/precache-manifest.9db94918bc7d2de6805886afdf91ca54.js",
-  "service-worker.js": "/fhir-check-in/service-worker.js"
+  "main.css": "/christmas-on-fhir/static/css/main.f2be7b81.chunk.css",
+  "main.js": "/christmas-on-fhir/static/js/main.65a16b65.chunk.js",
+  "main.js.map": "/christmas-on-fhir/static/js/main.65a16b65.chunk.js.map",
+  "static/css/1.895980bb.chunk.css": "/christmas-on-fhir/static/css/1.895980bb.chunk.css",
+  "static/js/1.3e180d00.chunk.js": "/christmas-on-fhir/static/js/1.3e180d00.chunk.js",
+  "static/js/1.3e180d00.chunk.js.map": "/christmas-on-fhir/static/js/1.3e180d00.chunk.js.map",
+  "runtime~main.js": "/christmas-on-fhir/static/js/runtime~main.4f3aed18.js",
+  "runtime~main.js.map": "/christmas-on-fhir/static/js/runtime~main.4f3aed18.js.map",
+  "static/css/1.895980bb.chunk.css.map": "/christmas-on-fhir/static/css/1.895980bb.chunk.css.map",
+  "static/css/main.f2be7b81.chunk.css.map": "/christmas-on-fhir/static/css/main.f2be7b81.chunk.css.map",
+  "index.html": "/christmas-on-fhir/index.html",
+  "precache-manifest.1c16742ad3218d6a7e337e106fdbfc6e.js": "/christmas-on-fhir/precache-manifest.1c16742ad3218d6a7e337e106fdbfc6e.js",
+  "service-worker.js": "/christmas-on-fhir/service-worker.js"
 }
