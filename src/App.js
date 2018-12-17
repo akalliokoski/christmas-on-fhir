@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CheckIn, { STATUS } from "./components/CheckIn/CheckIn";
+import CheckIn, { STATUS } from "./components/CheckIn/Wizard";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { getAppointment } from "./services/fhir";

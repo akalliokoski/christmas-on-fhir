@@ -47,17 +47,16 @@ class CheckIn extends Component {
     onClose();
   };
 
-  renderDescription() {
+  renderHintButton() {
     return (
-      <div>
-        <div />
+      <div className="mb-4">
         <Button
-          className="mt-1 btn-block"
+          className="btn-block"
           size="sm"
           color="info"
           onClick={this.handleHint}
         >
-          Hint!
+          Give me a hint!
         </Button>
       </div>
     );
@@ -123,7 +122,7 @@ class CheckIn extends Component {
   render() {
     return (
       <div>
-        {this.renderDescription()}
+        {this.renderHintButton()}
         {this.renderComponent()}
       </div>
     );

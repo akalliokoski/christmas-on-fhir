@@ -81,7 +81,7 @@ class CheckInPrompt extends Component {
   render() {
     return (
       <div className="check-in">
-        <div>
+        <div className="my-4">
           Santa Claus is ill. Please help Santa to check-in for an appointment.
         </div>
         {this.renderResourceLink()}
