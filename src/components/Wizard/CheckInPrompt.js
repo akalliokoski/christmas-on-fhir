@@ -27,14 +27,25 @@ class CheckInPrompt extends Component {
     this.setState({ id: event.target.value });
   };
 
+  handleHintRequested = () => {
+    const { hintLevel, onHintRequested } = this.props;
+
+    if (hintLevel > 0) {
+      this.setState({ id: SECRET_IDENTIFIER });
+    }
+
+    onHintRequested();
+  };
+
   renderCard() {
     const { id } = this.state;
-    const { isLoading, hintLevel } = this.props;
-    const placeholder = hintLevel > 1 ? SECRET_IDENTIFIER : "";
+    const { isLoading } = this.props;
+    console.log(id);
+
     return (
       <Card
         title={<span>Check-in</span>}
-        infoText={<span>Please type your ID</span>}
+        infoText={<span>Please type in your ID</span>}
       >
         <Form onSubmit={this.handleSubmit}>
           <FormGroup>
@@ -43,7 +54,6 @@ class CheckInPrompt extends Component {
               value={id}
               onChange={this.handleIdChange}
               className="text-center"
-              placeholder={placeholder}
             />
             <button
               className="btn btn-primary btn-lg mt-1 btn-block"
@@ -80,14 +90,14 @@ class CheckInPrompt extends Component {
   }
 
   render() {
-    const { hintLevel, onHintRequested } = this.props;
+    const { hintLevel } = this.props;
     return (
       <div className="check-in">
         <div className="my-4">
           Santa Claus is ill. Please help Santa to check-in for an appointment.
         </div>
         <HintButton
-          onHintRequested={onHintRequested}
+          onHintRequested={this.handleHintRequested}
           isDisabled={hintLevel >= 2}
         />
         {this.renderResourceLink()}
