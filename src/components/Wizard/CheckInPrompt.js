@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, FormGroup, Input } from "reactstrap";
 import PropTypes from "prop-types";
 import Card from "./Card";
+import HintButton from "./HintButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { SECRET_IDENTIFIER, SECRET_NAME } from "../../constants";
@@ -79,11 +80,16 @@ class CheckInPrompt extends Component {
   }
 
   render() {
+    const { hintLevel, onHintRequested } = this.props;
     return (
       <div className="check-in">
         <div className="my-4">
           Santa Claus is ill. Please help Santa to check-in for an appointment.
         </div>
+        <HintButton
+          onHintRequested={onHintRequested}
+          isDisabled={hintLevel >= 2}
+        />
         {this.renderResourceLink()}
         {this.renderCard()}
       </div>
@@ -93,7 +99,8 @@ class CheckInPrompt extends Component {
 
 CheckInPrompt.propTypes = {
   hintLevel: PropTypes.number,
-  onCheckIn: PropTypes.func.isRequired
+  onCheckIn: PropTypes.func.isRequired,
+  onHintRequested: PropTypes.func.isRequired
 };
 
 export default CheckInPrompt;

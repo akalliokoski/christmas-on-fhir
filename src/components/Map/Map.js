@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Card from "../CheckIn/Card";
+import Card from "../Wizard/Card";
 import Spiral from "./Spiral";
 
 class Map extends Component {

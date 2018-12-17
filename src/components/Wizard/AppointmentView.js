@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 import Card from "./Card";
+import HintButton from "./HintButton";
 import { RESOURCE_TYPE } from "../../constants";
 import {
   findParticipant,
@@ -95,9 +96,20 @@ class AppointmentView extends Component {
   }
 
   render() {
-    const { appointment, hintLevel, onClose, onShowDirections } = this.props;
+    const {
+      appointment,
+      hintLevel,
+      onClose,
+      onShowDirections,
+      onHintRequested
+    } = this.props;
     return (
       <div className="appointment-guide">
+        <div />
+        <HintButton
+          onHintRequested={onHintRequested}
+          isDisabled={hintLevel >= 3}
+        />
         <Card
           title={<span>Appointment</span>}
           actionButtonText="Close"
@@ -125,7 +137,8 @@ AppointmentView.propTypes = {
   appointment: PropTypes.object,
   hintLevel: PropTypes.number,
   onClose: PropTypes.func.isRequired,
-  onShowDirections: PropTypes.func.isRequired
+  onShowDirections: PropTypes.func.isRequired,
+  onHintRequested: PropTypes.func.isRequired
 };
 
 export default AppointmentView;

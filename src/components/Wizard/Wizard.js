@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Button } from "reactstrap";
 
 import CheckInPrompt from "./CheckInPrompt";
 import AppointmentNotFound from "./AppointmentNotFound";
@@ -47,21 +46,6 @@ class CheckIn extends Component {
     onClose();
   };
 
-  renderHintButton() {
-    return (
-      <div className="mb-4">
-        <Button
-          className="btn-block"
-          size="sm"
-          color="info"
-          onClick={this.handleHint}
-        >
-          Give me a hint!
-        </Button>
-      </div>
-    );
-  }
-
   renderCheckIn = () => {
     const { isLoading } = this.props;
     const { hintLevel } = this.state;
@@ -70,6 +54,7 @@ class CheckIn extends Component {
         isLoading={isLoading}
         hintLevel={hintLevel}
         onCheckIn={this.handleCheckIn}
+        onHintRequested={this.handleHint}
       />
     );
   };
@@ -87,6 +72,7 @@ class CheckIn extends Component {
         hintLevel={hintLevel}
         onClose={this.handleClose}
         onShowDirections={onShowMap}
+        onHintRequested={this.handleHint}
       />
     );
   };
@@ -120,12 +106,7 @@ class CheckIn extends Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.renderHintButton()}
-        {this.renderComponent()}
-      </div>
-    );
+    return <div>{this.renderComponent()}</div>;
   }
 }
 
