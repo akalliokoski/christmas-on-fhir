@@ -1,4 +1,15 @@
 {
   "resourceType": "Appointment",
-  "status": "booked"
+  "status": "booked",
+  "reason": [
+    {
+      "coding": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "81531005"
+        }
+      ],
+      "text": "Type 2 diabetes mellitus in obese"
+    }
+  ]
 }

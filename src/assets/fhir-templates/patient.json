@@ -10,8 +10,25 @@
   "gender": "male",
   "name": [
     {
-      "family": "Simpson",
-      "given": ["Bart"]
+      "use": "usual",
+      "text": "Santa Claus",
+      "prefix": ["Santa"],
+      "given": ["Claus"]
+    },
+    {
+      "use": "official",
+      "text": "Joulupukki",
+      "given": ["Joulupukki"]
+    }
+  ],
+  "address": [
+    {
+      "use": "home",
+      "type": "physical",
+      "text": "Korvatunturi, 99999 Finland",
+      "line": "Korvatunturi",
+      "postalCode": "99999",
+      "country": "Finland"
     }
   ]
 }

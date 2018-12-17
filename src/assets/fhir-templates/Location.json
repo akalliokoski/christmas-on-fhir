@@ -1,7 +1,6 @@
 {
   "resourceType": "Location",
   "status": "active",
-  "mode": "instance",
-  "name": "100",
-  "description": "1st floor"
+  "kind": "instance",
+  "name": "Korvatunturi"
 }
