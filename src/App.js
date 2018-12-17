@@ -29,6 +29,10 @@ class App extends Component {
     this.setState({ status: STATUS.CHECKED_IN_MAP });
   };
 
+  handleCloseMap = () => {
+    this.setState({ status: STATUS.CHECKED_IN });
+  };
+
   reset = () => {
     this.setState(initialState);
   };
@@ -44,6 +48,7 @@ class App extends Component {
             onCheckIn={this.handleCheckIn}
             onClose={this.reset}
             onShowMap={this.handleShowMap}
+            onCloseMap={this.handleCloseMap}
           />
         </div>
         <Footer />

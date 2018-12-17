@@ -10,7 +10,7 @@ import {
 } from "../../utils/fhirUtils";
 
 class AppointmentView extends Component {
-  renderParticipant(resourceType, name, appointment) {
+  renderParticipant(resourceType, name, appointment, showHint) {
     const participant = findParticipant(resourceType, appointment);
     if (!participant) {
       return null;
@@ -19,37 +19,43 @@ class AppointmentView extends Component {
     return (
       <tr>
         <td>{name}</td>
+        <td>{getParticipantDisplay(participant)}</td>
         <td>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={getParticipantUrl(participant)}
-          >
-            {getParticipantDisplay(participant)}
-          </a>
+          {showHint ? (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={getParticipantUrl(participant)}
+            >
+              Resource
+            </a>
+          ) : (
+            ""
+          )}
         </td>
-        <td />
       </tr>
     );
   }
 
-  renderPatient(appointment) {
+  renderPatient(appointment, showHint) {
     return this.renderParticipant(
       RESOURCE_TYPE.Patient,
       "Customer",
-      appointment
+      appointment,
+      showHint
     );
   }
 
-  renderPractitioner(appointment) {
+  renderPractitioner(appointment, showHint) {
     return this.renderParticipant(
       RESOURCE_TYPE.Practitioner,
       "Practitioner",
-      appointment
+      appointment,
+      showHint
     );
   }
 
-  renderLocation(appointment, onShowDirections) {
+  renderLocation(appointment, showHint, onShowDirections) {
     const location = findParticipant(RESOURCE_TYPE.Location, appointment);
     if (!location) {
       return null;
@@ -57,7 +63,7 @@ class AppointmentView extends Component {
 
     return (
       <tr>
-        <td>Room</td>
+        <td>Location</td>
         <td>{getParticipantDisplay(location)}</td>
         <td>
           <Button
@@ -65,6 +71,7 @@ class AppointmentView extends Component {
             size="sm"
             color="info"
             onClick={onShowDirections}
+            hidden={!showHint}
           >
             Show on Map
           </Button>
@@ -88,7 +95,7 @@ class AppointmentView extends Component {
   }
 
   render() {
-    const { appointment, onClose, onShowDirections } = this.props;
+    const { appointment, hintLevel, onClose, onShowDirections } = this.props;
     return (
       <div className="appointment-guide">
         <Card
@@ -98,10 +105,14 @@ class AppointmentView extends Component {
         >
           <table className="table text-left">
             <tbody>
-              {this.renderPatient(appointment)}
+              {this.renderPatient(appointment, hintLevel > 2)}
               {this.renderTime(appointment)}
-              {this.renderPractitioner(appointment)}
-              {this.renderLocation(appointment, onShowDirections)}
+              {this.renderPractitioner(appointment, hintLevel > 1)}
+              {this.renderLocation(
+                appointment,
+                hintLevel > 0,
+                onShowDirections
+              )}
             </tbody>
           </table>
         </Card>
@@ -112,6 +123,7 @@ class AppointmentView extends Component {
 
 AppointmentView.propTypes = {
   appointment: PropTypes.object,
+  hintLevel: PropTypes.number,
   onClose: PropTypes.func.isRequired,
   onShowDirections: PropTypes.func.isRequired
 };
