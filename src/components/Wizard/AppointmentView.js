@@ -7,7 +7,8 @@ import { RESOURCE_TYPE } from "../../constants";
 import {
   findParticipant,
   getParticipantDisplay,
-  getParticipantUrl
+  getParticipantUrl,
+  getResourceUrl
 } from "../../utils/fhirUtils";
 
 class AppointmentView extends Component {
@@ -105,13 +106,32 @@ class AppointmentView extends Component {
     } = this.props;
     return (
       <div className="appointment-guide">
-        <div />
+        <div>
+          Where is the appointment? Who is the practitioner? Can you find out
+          why Santa Claus is ill?
+        </div>
         <HintButton
           onHintRequested={onHintRequested}
-          isDisabled={hintLevel >= 3}
+          isDisabled={hintLevel >= 4}
         />
         <Card
           title={<span>Appointment</span>}
+          infoText={
+            <span>
+              {hintLevel > 3 && appointment ? (
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={getResourceUrl(
+                    RESOURCE_TYPE.Appointment,
+                    appointment.id
+                  )}
+                >
+                  Resource
+                </a>
+              ) : null}
+            </span>
+          }
           actionButtonText="Close"
           onAction={onClose}
         >

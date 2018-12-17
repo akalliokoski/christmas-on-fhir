@@ -6,9 +6,9 @@ class HintButton extends Component {
   render() {
     const { isDisabled, onHintRequested } = this.props;
     return (
-      <div className="mb-4">
+      <div className="mb-4 text-center">
         <Button
-          className="w-25 btn-block"
+          className="w-50"
           size="sm"
           color="info"
           onClick={onHintRequested}

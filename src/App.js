@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CheckIn, { STATUS } from "./components/Wizard/Wizard";
+import Wizard, { STATUS } from "./components/Wizard/Wizard";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { getAppointment } from "./services/fhir";
@@ -42,7 +42,16 @@ class App extends Component {
       <div className="App cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <Header />
         <div className="cover">
-          <CheckIn
+          <div>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="http://hapi.fhir.org/"
+            >
+              Use the power of FHIR!
+            </a>
+          </div>
+          <Wizard
             className="lead"
             {...this.state}
             onCheckIn={this.handleCheckIn}
