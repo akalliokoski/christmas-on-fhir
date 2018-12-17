@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import CheckIn, { STATUS } from "./components/CheckIn/CheckIn";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import { getAppointment } from "./services/fhir";
 
 const initialState = {
@@ -34,6 +36,7 @@ class App extends Component {
   render() {
     return (
       <div className="App cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <Header />
         <div className="cover">
           <CheckIn
             className="lead"
@@ -43,6 +46,7 @@ class App extends Component {
             onShowMap={this.handleShowMap}
           />
         </div>
+        <Footer />
       </div>
     );
   }
