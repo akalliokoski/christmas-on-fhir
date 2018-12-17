@@ -1,4 +1,4 @@
-export const FHIR_BASE = "http://hapi.fhir.org/baseDstu3";
+export const FHIR_BASE = "https://hapi.fhir.org/baseDstu3";
 
 export const RESOURCE_TYPE = {
   Patient: "Patient",
