@@ -1,4 +1,4 @@
-import { FHIR_BASE } from "../constants";
+import { FHIR_BASE, RESOURCE_TYPE } from "../constants";
 
 export function getResourceUrl(resourceType, id) {
   return `${FHIR_BASE}/${resourceType}/${id}`;
@@ -16,4 +16,8 @@ export function getParticipantDisplay(participant) {
 export function getParticipantUrl(participant) {
   const reference = participant.actor.reference;
   return `${FHIR_BASE}/${reference}`;
+}
+
+export function getPatientSearchUrl(name) {
+  return `${FHIR_BASE}/${RESOURCE_TYPE.Patient}?name=${name}`;
 }

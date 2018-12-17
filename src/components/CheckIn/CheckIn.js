@@ -50,13 +50,9 @@ class CheckIn extends Component {
   renderDescription() {
     return (
       <div>
-        <div>What's the matter, Santa?</div>
-        <div>
-          Can you help Santa Claus to check-in for an appointment? Do you know
-          your FHIR? What about GDPR?
-        </div>
+        <div />
         <Button
-          className="mt-1"
+          className="mt-1 btn-block"
           size="sm"
           color="info"
           onClick={this.handleHint}
@@ -104,8 +100,8 @@ class CheckIn extends Component {
         infoText={
           <span>
             Did you know that Santa Claus' original home lies in the mysterious
-            Korvatunturi, Finland? Of course, the exact location is a secret
-            only known to a chosen few
+            Korvatunturi, in Finland? Of course, the exact location is a secret
+            only known to a chosen few.
           </span>
         }
         config={MapConfig}

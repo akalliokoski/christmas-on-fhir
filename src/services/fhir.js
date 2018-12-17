@@ -11,8 +11,8 @@ async function searchResource(url) {
     return null;
   }
 
-  const bundle = response.data;
-  return bundle.entry.length === 1 ? bundle.entry[0].resource : null;
+  const entry = response.data.entry || [];
+  return entry.length === 1 ? entry[0].resource : null;
 }
 
 async function searchPatient(patientIdentifier) {

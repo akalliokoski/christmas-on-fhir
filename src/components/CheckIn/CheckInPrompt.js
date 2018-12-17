@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import Card from "./Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
-import { SECRET_IDENTIFIER } from "../../constants";
+import { SECRET_IDENTIFIER, SECRET_NAME } from "../../constants";
+import { getPatientSearchUrl } from "../../utils/fhirUtils";
 
 class CheckInPrompt extends Component {
   state = { id: "" };
@@ -25,9 +26,10 @@ class CheckInPrompt extends Component {
     this.setState({ id: event.target.value });
   };
 
-  renderCard(id, hintLevel, isLoading) {
-    const placeholder = hintLevel > 0 ? SECRET_IDENTIFIER : "";
-    console.log(hintLevel);
+  renderCard() {
+    const { id } = this.state;
+    const { isLoading, hintLevel } = this.props;
+    const placeholder = hintLevel > 1 ? SECRET_IDENTIFIER : "";
     return (
       <Card
         title={<span>Check-in</span>}
@@ -59,12 +61,31 @@ class CheckInPrompt extends Component {
     );
   }
 
+  renderResourceLink() {
+    const { hintLevel } = this.props;
+    if (hintLevel < 1) {
+      return null;
+    }
+
+    return (
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href={getPatientSearchUrl(SECRET_NAME)}
+      >
+        Resource
+      </a>
+    );
+  }
+
   render() {
-    const { id } = this.state;
-    const { isLoading, hintLevel } = this.props;
     return (
       <div className="check-in">
-        {this.renderCard(id, hintLevel, isLoading)}
+        <div>
+          Santa Claus is ill. Please help Santa to check-in for an appointment.
+        </div>
+        {this.renderResourceLink()}
+        {this.renderCard()}
       </div>
     );
   }
