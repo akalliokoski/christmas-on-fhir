@@ -3,10 +3,10 @@ import React, { Component } from "react";
 class Header extends Component {
   render() {
     return (
-      <nav class="navbar navbar-default">
-        <div class="navbar-header">
+      <nav className="navbar navbar-default">
+        <div className="navbar-header">
           <a
-            class="navbar-brand"
+            className="navbar-brand"
             href="https://akalliokoski.github.io/christmas-on-fhir"
           >
             Christmas on FHIR

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
 import CheckInPrompt from "./CheckInPrompt";
 import AppointmentNotFound from "./AppointmentNotFound";
 import AppointmentView from "./AppointmentView";
