@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/christmas-on-fhir/precache-manifest.17fbcf4c29ba75f348af8c8a7418a550.js"
+  "/christmas-on-fhir/precache-manifest.345682366e58572d5030613a5e5f7b4d.js"
 );
 
 workbox.clientsClaim();
