@@ -161,7 +161,7 @@ class AppointmentView extends Component {
             <span>
               {appointment ? (
                 <Hint
-                  isVisible={hintLevel > 3}
+                  isVisible={this.isHintAvailable(HINT_TYPE.APPOINTMENT_HINT)}
                   url={getResourceUrl(
                     RESOURCE_TYPE.Appointment,
                     appointment.id
