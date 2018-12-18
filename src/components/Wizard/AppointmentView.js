@@ -29,7 +29,7 @@ class AppointmentView extends Component {
               rel="noopener noreferrer"
               href={getParticipantUrl(participant)}
             >
-              Resource
+              Hint
             </a>
           ) : (
             ""
@@ -127,7 +127,7 @@ class AppointmentView extends Component {
                     appointment.id
                   )}
                 >
-                  Resource
+                  Hint
                 </a>
               ) : null}
             </span>

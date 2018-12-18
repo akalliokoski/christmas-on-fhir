@@ -84,7 +84,7 @@ class CheckInPrompt extends Component {
         rel="noopener noreferrer"
         href={getPatientSearchUrl(SECRET_NAME)}
       >
-        Resource
+        Hint
       </a>
     );
   }
