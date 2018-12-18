@@ -85,7 +85,7 @@ class CheckInPrompt extends Component {
     return (
       <div className="check-in">
         <div className="my-4">
-          <div class="alert alert-info">
+          <div className="alert alert-info">
             <strong>Santa Claus is ill!</strong> Please help Santa to check-in
             for an appointment.
           </div>

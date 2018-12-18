@@ -12,7 +12,7 @@ class Hint extends Component {
         rel="noopener noreferrer"
         href={url}
       >
-        <span class="badge badge-info">Hint</span>
+        <span className="badge badge-info">Hint</span>
       </a>
     );
   }

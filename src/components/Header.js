@@ -22,7 +22,7 @@ class Header extends Component {
           </a>
         </div>
 
-        <ul class="navbar-nav">
+        <ul className="navbar-nav">
           <li className="nav-item">
             <a
               className="nav-link"
