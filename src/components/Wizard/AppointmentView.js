@@ -69,13 +69,12 @@ class AppointmentView extends Component {
         <td>{getParticipantDisplay(location)}</td>
         <td>
           <Button
-            className=""
             size="sm"
             color="info"
             onClick={onShowDirections}
             hidden={!showHint}
           >
-            Show on Map
+            Map
           </Button>
         </td>
       </tr>
@@ -106,7 +105,7 @@ class AppointmentView extends Component {
     } = this.props;
     return (
       <div className="appointment-guide">
-        <div>
+        <div className="my-4">
           Where is the appointment? Who is the practitioner? Can you find out
           why Santa Claus is ill?
         </div>
@@ -135,18 +134,20 @@ class AppointmentView extends Component {
           actionButtonText="Close"
           onAction={onClose}
         >
-          <table className="table text-left">
-            <tbody>
-              {this.renderPatient(appointment, hintLevel > 2)}
-              {this.renderTime(appointment)}
-              {this.renderPractitioner(appointment, hintLevel > 1)}
-              {this.renderLocation(
-                appointment,
-                hintLevel > 0,
-                onShowDirections
-              )}
-            </tbody>
-          </table>
+          <div className="responsive-table">
+            <table className="table text-left">
+              <tbody>
+                {this.renderPatient(appointment, hintLevel > 2)}
+                {this.renderTime(appointment)}
+                {this.renderPractitioner(appointment, hintLevel > 1)}
+                {this.renderLocation(
+                  appointment,
+                  hintLevel > 0,
+                  onShowDirections
+                )}
+              </tbody>
+            </table>
+          </div>
         </Card>
       </div>
     );

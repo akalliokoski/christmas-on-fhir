@@ -35,9 +35,27 @@ body {
   padding: 0 1.5rem;
 }
 
-/*
- * Footer
- */
 .mastfoot {
   color: rgba(0, 0, 0, 0.5);
+}
+
+table {
+  table-layout: fixed;
+  word-wrap: break-word;
+  overflow-wrap: normal;
+}
+
+@media (max-width: 380px) {
+  body {
+    font-size: 12px;
+  }
+  table .btn-sm {
+    font-size: 0.5rem;
+  }
+}
+
+@media (max-width: 340px) {
+  body {
+    font-size: 10px;
+  }
 }
