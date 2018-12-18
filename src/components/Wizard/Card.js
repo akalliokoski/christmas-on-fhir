@@ -43,7 +43,10 @@ class Card extends Component {
     } = this.props;
     return (
       <div className="christmas-card">
-        <ReactstrapCard body className="text-center">
+        <ReactstrapCard
+          body
+          className="card text-white bg-secondary text-center"
+        >
           <CardTitle>{title}</CardTitle>
           {this.renderInfoText(infoText)}
           {children}

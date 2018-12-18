@@ -3,6 +3,7 @@ import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 import Card from "./Card";
 import HintButton from "./HintButton";
+import Hint from "./Hint";
 import { RESOURCE_TYPE } from "../../constants";
 import {
   findParticipant,
@@ -22,19 +23,7 @@ class AppointmentView extends Component {
       <tr>
         <td>{name}</td>
         <td>{getParticipantDisplay(participant)}</td>
-        <td>
-          {showHint ? (
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={getParticipantUrl(participant)}
-            >
-              Hint
-            </a>
-          ) : (
-            ""
-          )}
-        </td>
+        <td>{showHint ? <Hint url={getParticipantUrl(participant)} /> : ""}</td>
       </tr>
     );
   }
@@ -106,8 +95,10 @@ class AppointmentView extends Component {
     return (
       <div className="appointment-guide">
         <div className="my-4">
-          Where is the appointment? Who is the practitioner? Can you find out
-          why Santa Claus is ill?
+          <div class="alert alert-info">
+            Where is the appointment? Who is the practitioner? Can you find out
+            why Santa Claus is ill?
+          </div>
         </div>
         <HintButton
           onHintRequested={onHintRequested}
@@ -118,16 +109,12 @@ class AppointmentView extends Component {
           infoText={
             <span>
               {hintLevel > 3 && appointment ? (
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={getResourceUrl(
+                <Hint
+                  url={getResourceUrl(
                     RESOURCE_TYPE.Appointment,
                     appointment.id
                   )}
-                >
-                  Hint
-                </a>
+                />
               ) : null}
             </span>
           }

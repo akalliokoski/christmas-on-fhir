@@ -3,6 +3,7 @@ import { Form, FormGroup, Input } from "reactstrap";
 import PropTypes from "prop-types";
 import Card from "./Card";
 import HintButton from "./HintButton";
+import Hint from "./Hint";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { SECRET_IDENTIFIER, SECRET_NAME } from "../../constants";
@@ -40,13 +41,13 @@ class CheckInPrompt extends Component {
   renderCard() {
     const { id } = this.state;
     const { isLoading } = this.props;
-    console.log(id);
 
     return (
       <Card
         title={<span>Check-in</span>}
         infoText={<span>Please type in your ID</span>}
       >
+        {this.renderHint()}
         <Form onSubmit={this.handleSubmit}>
           <FormGroup>
             <Input
@@ -72,21 +73,13 @@ class CheckInPrompt extends Component {
     );
   }
 
-  renderResourceLink() {
+  renderHint() {
     const { hintLevel } = this.props;
     if (hintLevel < 1) {
       return null;
     }
 
-    return (
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href={getPatientSearchUrl(SECRET_NAME)}
-      >
-        Hint
-      </a>
-    );
+    return <Hint url={getPatientSearchUrl(SECRET_NAME)} />;
   }
 
   render() {
@@ -94,13 +87,15 @@ class CheckInPrompt extends Component {
     return (
       <div className="check-in">
         <div className="my-4">
-          Santa Claus is ill. Please help Santa to check-in for an appointment.
+          <div class="alert alert-info">
+            <strong>Santa Claus is ill!</strong> Please help Santa to check-in
+            for an appointment.
+          </div>
         </div>
         <HintButton
           onHintRequested={this.handleHintRequested}
           isDisabled={hintLevel >= 2}
         />
-        {this.renderResourceLink()}
         {this.renderCard()}
       </div>
     );

@@ -80,18 +80,18 @@ class CheckIn extends Component {
   renderMap = () => {
     const { onCloseMap } = this.props;
     return (
-      <Map
-        title={<span>Location</span>}
-        infoText={
-          <span>
-            Did you know that Santa Claus' original home lies in the mysterious
-            Korvatunturi, in Finland? Of course, the exact location is a secret
-            only known to a chosen few.
-          </span>
-        }
-        config={MapConfig}
-        onBack={onCloseMap}
-      />
+      <div>
+        <div class="alert alert-info">
+          Did you know that Santa Claus' original home lies in the mysterious
+          Korvatunturi, in Finland? Of course, the exact location is a secret
+          only known to a chosen few.
+        </div>
+        <Map
+          title={<span>Location</span>}
+          config={MapConfig}
+          onBack={onCloseMap}
+        />
+      </div>
     );
   };
 

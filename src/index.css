@@ -21,6 +21,7 @@ body {
 body {
   display: -ms-flexbox;
   display: flex;
+  background-color: #eaeaeb;
 }
 
 .root {
@@ -37,6 +38,7 @@ body {
 
 .mastfoot {
   color: rgba(0, 0, 0, 0.5);
+  font-size: 0.6rem;
 }
 
 table {
