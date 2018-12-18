@@ -23,7 +23,9 @@ class AppointmentView extends Component {
       <tr>
         <td>{name}</td>
         <td>{getParticipantDisplay(participant)}</td>
-        <td>{showHint ? <Hint url={getParticipantUrl(participant)} /> : ""}</td>
+        <td>
+          {<Hint isVisible={showHint} url={getParticipantUrl(participant)} />}
+        </td>
       </tr>
     );
   }
@@ -58,10 +60,10 @@ class AppointmentView extends Component {
         <td>{getParticipantDisplay(location)}</td>
         <td>
           <Button
+            className={showHint ? "visible" : "invisible"}
             size="sm"
             color="info"
             onClick={onShowDirections}
-            hidden={!showHint}
           >
             Map
           </Button>
@@ -108,8 +110,9 @@ class AppointmentView extends Component {
           title={<span>Appointment</span>}
           infoText={
             <span>
-              {hintLevel > 3 && appointment ? (
+              {appointment ? (
                 <Hint
+                  isVisible={hintLevel > 3}
                   url={getResourceUrl(
                     RESOURCE_TYPE.Appointment,
                     appointment.id

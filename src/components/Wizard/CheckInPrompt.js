@@ -75,11 +75,9 @@ class CheckInPrompt extends Component {
 
   renderHint() {
     const { hintLevel } = this.props;
-    if (hintLevel < 1) {
-      return null;
-    }
-
-    return <Hint url={getPatientSearchUrl(SECRET_NAME)} />;
+    return (
+      <Hint isVisible={hintLevel > 0} url={getPatientSearchUrl(SECRET_NAME)} />
+    );
   }
 
   render() {
