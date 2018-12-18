@@ -42,15 +42,6 @@ class App extends Component {
       <div className="App cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <Header />
         <div className="cover">
-          <div className="my-2">
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="http://hapi.fhir.org/"
-            >
-              <span class="badge badge-primary">Use the power of FHIR</span>
-            </a>
-          </div>
           <Wizard
             className="lead"
             {...this.state}

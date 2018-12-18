@@ -11,9 +11,19 @@ class Header extends Component {
           >
             Christmas on FHIR
           </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            role="button"
+            href="http://hapi.fhir.org/"
+            className="btn btn-secondary"
+          >
+            Use FHIR
+          </a>
         </div>
+
         <ul class="navbar-nav">
-          <li class="nav-item">
+          <li className="nav-item">
             <a
               className="nav-link"
               target="_blank"
