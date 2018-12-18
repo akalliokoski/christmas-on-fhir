@@ -81,7 +81,7 @@ class CheckIn extends Component {
     const { onCloseMap } = this.props;
     return (
       <div>
-        <div class="alert alert-info">
+        <div className="alert alert-info">
           Did you know that Santa Claus' original home lies in the mysterious
           Korvatunturi, in Finland? Of course, the exact location is a secret
           only known to a chosen few.

@@ -3,6 +3,7 @@ import Wizard, { STATUS } from "./components/Wizard/Wizard";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { getAppointment } from "./services/fhir";
+import { SECRET_IDENTIFIER } from "./constants";
 
 const initialState = {
   status: STATUS.CHECK_IN,
@@ -16,7 +17,10 @@ class App extends Component {
   handleCheckIn = async patientIdentifier => {
     this.setState({ isLoading: true });
 
-    const appointment = await getAppointment(patientIdentifier);
+    const appointment =
+      patientIdentifier === SECRET_IDENTIFIER
+        ? await getAppointment(patientIdentifier)
+        : null;
 
     this.setState({
       status: appointment ? STATUS.CHECKED_IN : STATUS.APPOINTMENT_NOT_FOUND,

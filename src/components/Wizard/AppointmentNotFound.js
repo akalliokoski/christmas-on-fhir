@@ -7,6 +7,12 @@ class AppointmentNotFound extends Component {
     const { onClose } = this.props;
     return (
       <div>
+        <div className="my-4">
+          <div className="alert alert-primary">
+            <strong>Only Santa Claus can be checked in!</strong> But what is his
+            ID?
+          </div>
+        </div>
         <Card
           title={<span>Appointment was not found</span>}
           infoText={<span>Please contact the reception.</span>}
