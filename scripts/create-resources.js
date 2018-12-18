@@ -95,7 +95,10 @@ function generateDisplay(data, properties) {
 
 function getDisplayName(name = []) {
   const displayName = name.find(n => n.use === "official") || name[0];
-  return generateDisplay(displayName, ["prefix", "family", "given", "suffix"]);
+  return (
+    displayName.text ||
+    generateDisplay(displayName, ["prefix", "family", "given", "suffix"])
+  );
 }
 
 function getDisplay(resource) {
