@@ -26,6 +26,7 @@ const HINT_TYPE = {
 const HINT_LEVELS = [
   HINT_TYPE.NO_HINT,
   HINT_TYPE.APPOINTMENT_HINT,
+  HINT_TYPE.LOCATION_HINT,
   HINT_TYPE.LOCATION_VALUE,
   HINT_TYPE.PRACTITIONER_HINT,
   HINT_TYPE.PRACTITIONER_VALUE,
@@ -104,16 +105,34 @@ class AppointmentView extends Component {
       return null;
     }
 
+    const isValueVisible = this.isHintAvailable(HINT_TYPE.LOCATION_VALUE);
+    const isHintVisible = this.isHintAvailable(HINT_TYPE.LOCATION_HINT);
+    const [baseUrl, urlSuffix] = getParticipantUrlParts(location);
+    const buttonVisibleClass = isValueVisible ? "visible" : "invisible";
+
     return (
       <tr>
         <td>Location</td>
         <td>
           {this.getParticipantDisplay(location, HINT_TYPE.LOCATION_VALUE)}
-        </td>
-        <td>
-          <Button size="sm" color="info" onClick={onShowDirections}>
+          <br />
+          <Button
+            className={buttonVisibleClass}
+            size="sm"
+            color="info"
+            onClick={onShowDirections}
+          >
             Map
           </Button>
+        </td>
+        <td>
+          {
+            <Hint
+              isVisible={isHintVisible}
+              baseUrl={baseUrl}
+              urlSuffix={urlSuffix}
+            />
+          }
         </td>
       </tr>
     );
