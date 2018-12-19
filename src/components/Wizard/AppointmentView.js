@@ -38,6 +38,7 @@ class AppointmentView extends Component {
   isHintAvailable(hintType) {
     const { hintLevel } = this.props;
     const level = HINT_LEVELS.indexOf(hintType);
+    console.log("isHint", hintLevel, level, hintLevel >= level, hintType);
     return hintLevel >= level;
   }
 
@@ -46,12 +47,14 @@ class AppointmentView extends Component {
     return isVisible ? getParticipantDisplay(resource) : "******";
   }
 
+  renderReason() {}
+
   renderParticipant(
     resourceType,
     name,
     participant,
     valueHintType,
-    hintBadgeType
+    badgeHintType
   ) {
     const resource = findParticipant(resourceType, participant);
     if (!resource) {
@@ -59,14 +62,19 @@ class AppointmentView extends Component {
     }
 
     const [baseUrl, urlSuffix] = getParticipantUrlParts(resource);
+    const isRowVisible =
+      this.isHintAvailable(valueHintType) ||
+      this.isHintAvailable(badgeHintType);
+    const rowVisibilityClass = isRowVisible ? "" : "d-none";
+
     return (
-      <tr>
+      <tr className={rowVisibilityClass}>
         <td>{name}</td>
         <td>{this.getParticipantDisplay(resource, valueHintType)}</td>
         <td>
           {
             <Hint
-              isVisible={this.isHintAvailable(hintBadgeType)}
+              isVisible={this.isHintAvailable(badgeHintType)}
               baseUrl={baseUrl}
               urlSuffix={urlSuffix}
             />
@@ -110,8 +118,11 @@ class AppointmentView extends Component {
     const [baseUrl, urlSuffix] = getParticipantUrlParts(location);
     const buttonVisibleClass = isValueVisible ? "visible" : "invisible";
 
+    const isRowVisible = isValueVisible || isHintVisible;
+    const rowVisibilityClass = isRowVisible ? "" : "d-none";
+
     return (
-      <tr>
+      <tr className={rowVisibilityClass}>
         <td>Location</td>
         <td>
           {this.getParticipantDisplay(location, HINT_TYPE.LOCATION_VALUE)}
@@ -182,8 +193,8 @@ class AppointmentView extends Component {
         <div className="my-4">
           <div className="alert alert-info">
             <strong>Can you find out some details of the appointment?</strong>{" "}
-            Why Santa Claus is ill? Who is the practitioner? What is the
-            official name of Santa Claus?{" "}
+            Why Santa Claus is ill? What is the location? Who is the
+            practitioner? What is the official name of Santa Claus?{" "}
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -206,6 +217,7 @@ class AppointmentView extends Component {
           <div className="table-responsive">
             <table className="table text-left">
               <tbody>
+                {this.renderReason()}
                 {this.renderPatient()}
                 {this.renderTime()}
                 {this.renderPractitioner()}
