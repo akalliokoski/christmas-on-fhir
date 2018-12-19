@@ -60,6 +60,19 @@ table {
   }
 }
 
+@media (max-width: 460px) {
+  .table {
+    font-size: 11px;
+  }
+  .root .cover-container.p-3 {
+    padding: 0 !important;
+  }
+  .cover .table td {
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+  }
+}
+
 @media (max-width: 400px) {
   .navbar {
     font-size: 14px;

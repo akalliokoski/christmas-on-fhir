@@ -195,7 +195,7 @@ class AppointmentView extends Component {
           actionButtonText="Close"
           onAction={onClose}
         >
-          <div className="responsive-table">
+          <div className="table-responsive">
             <table className="table text-left">
               <tbody>
                 {this.renderPatient()}
