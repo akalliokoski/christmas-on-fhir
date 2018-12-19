@@ -51,12 +51,21 @@ table {
   overflow-wrap: normal;
 }
 
-@media (max-width: 380px) {
+@media (max-width: 590px) {
   body {
     font-size: 12px;
   }
   table .btn-sm {
     font-size: 0.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .navbar {
+    font-size: 14px;
+  }
+  .navbar .btn {
+    font-size: 0.7rem;
   }
 }
 
