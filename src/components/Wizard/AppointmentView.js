@@ -186,25 +186,48 @@ class AppointmentView extends Component {
     );
   }
 
+  renderInfoAlert() {
+    return (
+      <div className="my-4">
+        <div className="alert alert-info">
+          <strong>Can you find out some details of the appointment?</strong> Why
+          Santa Claus is ill? What is the location? Who is the practitioner?
+          What is the official name of Santa Claus?{" "}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="http://hapi.fhir.org/"
+          >
+            <strong>Use FHIR!</strong>
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  renderSuccessAlert() {
+    return (
+      <div className="my-4">
+        <div className="alert alert-success">
+          <strong>All is clear now!</strong>
+        </div>
+      </div>
+    );
+  }
+
+  renderAlert() {
+    const { hintLevel } = this.props;
+    return hintLevel < MAX_HINT_LEVEL
+      ? this.renderInfoAlert()
+      : this.renderSuccessAlert();
+  }
+
   render() {
     const { hintLevel, onClose, onHintRequested } = this.props;
 
     return (
       <div className="appointment-guide">
-        <div className="my-4">
-          <div className="alert alert-info">
-            <strong>Can you find out some details of the appointment?</strong>{" "}
-            Why Santa Claus is ill? What is the location? Who is the
-            practitioner? What is the official name of Santa Claus?{" "}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="http://hapi.fhir.org/"
-            >
-              <strong>Use FHIR!</strong>
-            </a>
-          </div>
-        </div>
+        {this.renderAlert()}
         <HintButton
           hintLevel={hintLevel}
           maxHintLevel={MAX_HINT_LEVEL}
