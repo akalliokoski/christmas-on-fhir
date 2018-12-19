@@ -40,28 +40,28 @@ class AppointmentView extends Component {
     return hintLevel >= level;
   }
 
-  getParticipantDisplay(participant, hintType) {
+  getParticipantDisplay(resource, hintType) {
     const isVisible = this.isHintAvailable(hintType);
-    return isVisible ? getParticipantDisplay(participant) : "******";
+    return isVisible ? getParticipantDisplay(resource) : "******";
   }
 
   renderParticipant(
     resourceType,
     name,
-    appointment,
+    participant,
     valueHintType,
     hintBadgeType
   ) {
-    const participant = findParticipant(resourceType, appointment);
-    if (!participant) {
+    const resource = findParticipant(resourceType, participant);
+    if (!resource) {
       return null;
     }
 
-    const [baseUrl, urlSuffix] = getParticipantUrlParts(participant);
+    const [baseUrl, urlSuffix] = getParticipantUrlParts(resource);
     return (
       <tr>
         <td>{name}</td>
-        <td>{this.getParticipantDisplay(participant, valueHintType)}</td>
+        <td>{this.getParticipantDisplay(resource, valueHintType)}</td>
         <td>
           {
             <Hint
@@ -75,28 +75,31 @@ class AppointmentView extends Component {
     );
   }
 
-  renderPatient(appointment) {
+  renderPatient() {
+    const { participant } = this.props;
     return this.renderParticipant(
       RESOURCE_TYPE.Patient,
       "Customer",
-      appointment,
+      participant,
       HINT_TYPE.CUSTOMER_VALUE,
       HINT_TYPE.CUSTOMER_HINT
     );
   }
 
-  renderPractitioner(appointment) {
+  renderPractitioner() {
+    const { participant } = this.props;
     return this.renderParticipant(
       RESOURCE_TYPE.Practitioner,
       "Practitioner",
-      appointment,
+      participant,
       HINT_TYPE.PRACTITIONER_VALUE,
       HINT_TYPE.PRACTITIONER_HINT
     );
   }
 
-  renderLocation(appointment, onShowDirections) {
-    const location = findParticipant(RESOURCE_TYPE.Location, appointment);
+  renderLocation() {
+    const { participant, onShowDirections } = this.props;
+    const location = findParticipant(RESOURCE_TYPE.Location, participant);
     if (!location) {
       return null;
     }
@@ -131,12 +134,12 @@ class AppointmentView extends Component {
   }
 
   renderAppointmentHint() {
-    const { appointment } = this.props;
+    const { appointment, participant } = this.props;
     if (!appointment) {
       return null;
     }
 
-    const patient = findParticipant(RESOURCE_TYPE.Patient, appointment);
+    const patient = findParticipant(RESOURCE_TYPE.Patient, participant);
     if (!patient) {
       return null;
     }
@@ -153,20 +156,14 @@ class AppointmentView extends Component {
   }
 
   render() {
-    const {
-      appointment,
-      hintLevel,
-      onClose,
-      onShowDirections,
-      onHintRequested
-    } = this.props;
+    const { hintLevel, onClose, onHintRequested } = this.props;
 
     return (
       <div className="appointment-guide">
         <div className="my-4">
           <div className="alert alert-info">
-            Where is the appointment? Who is the practitioner? Can you find out
-            why Santa Claus is ill?
+            What is the official name of Santa Claus? Where is the appointment?
+            Who is the practitioner? Can you find out why Santa Claus is ill?
           </div>
         </div>
         <HintButton
@@ -182,10 +179,10 @@ class AppointmentView extends Component {
           <div className="responsive-table">
             <table className="table text-left">
               <tbody>
-                {this.renderPatient(appointment)}
-                {this.renderTime(appointment)}
-                {this.renderPractitioner(appointment)}
-                {this.renderLocation(appointment, onShowDirections)}
+                {this.renderPatient()}
+                {this.renderTime()}
+                {this.renderPractitioner()}
+                {this.renderLocation()}
               </tbody>
             </table>
           </div>
@@ -197,6 +194,7 @@ class AppointmentView extends Component {
 
 AppointmentView.propTypes = {
   appointment: PropTypes.object,
+  participant: PropTypes.array,
   hintLevel: PropTypes.number,
   onClose: PropTypes.func.isRequired,
   onShowDirections: PropTypes.func.isRequired,

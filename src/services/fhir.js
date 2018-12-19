@@ -35,3 +35,22 @@ export async function getAppointment(patientIdentifier) {
 
   return await searchAppointment(patient.id);
 }
+
+export async function getReference(reference) {
+  const url = `${FHIR_BASE}/${reference}`;
+  const response = await axios.get(url).catch(err => {
+    console.log(`Failed to get reference ${url}`);
+    return null;
+  });
+
+  return response ? response.data : null;
+}
+
+export async function getParticipant(appointment) {
+  if (!appointment) {
+    return [];
+  }
+
+  const { participant = [] } = appointment;
+  return Promise.all(participant.map(p => getReference(p.actor.reference)));
+}

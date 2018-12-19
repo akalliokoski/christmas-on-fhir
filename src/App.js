@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import Wizard, { STATUS } from "./components/Wizard/Wizard";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { getAppointment } from "./services/fhir";
+import { getAppointment, getParticipant } from "./services/fhir";
 import { SECRET_IDENTIFIER } from "./constants";
 
 const initialState = {
   status: STATUS.CHECK_IN,
   isLoading: false,
-  appointment: null
+  appointment: null,
+  participant: []
 };
 
 class App extends Component {
@@ -21,10 +22,11 @@ class App extends Component {
       patientIdentifier === SECRET_IDENTIFIER
         ? await getAppointment(patientIdentifier)
         : null;
-
+    const participant = await getParticipant(appointment);
     this.setState({
       status: appointment ? STATUS.CHECKED_IN : STATUS.APPOINTMENT_NOT_FOUND,
       appointment,
+      participant,
       isLoading: false
     });
   };

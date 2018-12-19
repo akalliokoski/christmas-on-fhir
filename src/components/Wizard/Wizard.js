@@ -64,11 +64,12 @@ class CheckIn extends Component {
   );
 
   renderAppointment = () => {
-    const { appointment, onShowMap } = this.props;
+    const { appointment, participant, onShowMap } = this.props;
     const { hintLevel } = this.state;
     return (
       <AppointmentView
         appointment={appointment}
+        participant={participant}
         hintLevel={hintLevel}
         onClose={this.handleClose}
         onShowDirections={onShowMap}
@@ -116,6 +117,7 @@ CheckIn.propTypes = {
   status: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   appointment: PropTypes.object,
+  participant: PropTypes.array,
   onCheckIn: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onShowMap: PropTypes.func.isRequired,
