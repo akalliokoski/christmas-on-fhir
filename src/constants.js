@@ -8,4 +8,4 @@ export const RESOURCE_TYPE = {
 };
 
 export const SECRET_IDENTIFIER = "555555-555";
-export const SECRET_NAME = "Joulupukki";
+export const SECRET_NAME = "Santa";

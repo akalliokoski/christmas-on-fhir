@@ -8,8 +8,8 @@ import { RESOURCE_TYPE } from "../../constants";
 import {
   findParticipant,
   getParticipantDisplay,
-  getParticipantUrl,
-  getResourceUrl
+  getParticipantUrlParts,
+  getAppointmentSearchUrlParts
 } from "../../utils/fhirUtils";
 
 const HINT_TYPE = {
@@ -25,13 +25,12 @@ const HINT_TYPE = {
 
 const HINT_LEVELS = [
   HINT_TYPE.NO_HINT,
-  HINT_TYPE.LOCATION_HINT,
+  HINT_TYPE.APPOINTMENT_HINT,
   HINT_TYPE.LOCATION_VALUE,
   HINT_TYPE.PRACTITIONER_HINT,
   HINT_TYPE.PRACTITIONER_VALUE,
   HINT_TYPE.CUSTOMER_HINT,
-  HINT_TYPE.CUSTOMER_VALUE,
-  HINT_TYPE.APPOINTMENT_HINT
+  HINT_TYPE.CUSTOMER_VALUE
 ];
 
 class AppointmentView extends Component {
@@ -58,6 +57,7 @@ class AppointmentView extends Component {
       return null;
     }
 
+    const [baseUrl, urlSuffix] = getParticipantUrlParts(participant);
     return (
       <tr>
         <td>{name}</td>
@@ -66,7 +66,8 @@ class AppointmentView extends Component {
           {
             <Hint
               isVisible={this.isHintAvailable(hintBadgeType)}
-              url={getParticipantUrl(participant)}
+              baseUrl={baseUrl}
+              urlSuffix={urlSuffix}
             />
           }
         </td>
@@ -100,7 +101,6 @@ class AppointmentView extends Component {
       return null;
     }
 
-    const showHint = this.isHintAvailable(HINT_TYPE.LOCATION_HINT);
     return (
       <tr>
         <td>Location</td>
@@ -108,12 +108,7 @@ class AppointmentView extends Component {
           {this.getParticipantDisplay(location, HINT_TYPE.LOCATION_VALUE)}
         </td>
         <td>
-          <Button
-            className={showHint ? "visible" : "invisible"}
-            size="sm"
-            color="info"
-            onClick={onShowDirections}
-          >
+          <Button size="sm" color="info" onClick={onShowDirections}>
             Map
           </Button>
         </td>
@@ -135,6 +130,28 @@ class AppointmentView extends Component {
     );
   }
 
+  renderAppointmentHint() {
+    const { appointment } = this.props;
+    if (!appointment) {
+      return null;
+    }
+
+    const patient = findParticipant(RESOURCE_TYPE.Patient, appointment);
+    if (!patient) {
+      return null;
+    }
+
+    const [baseUrl, urlSuffix] = getAppointmentSearchUrlParts(patient);
+
+    return (
+      <Hint
+        isVisible={this.isHintAvailable(HINT_TYPE.APPOINTMENT_HINT)}
+        baseUrl={baseUrl}
+        urlSuffix={urlSuffix}
+      />
+    );
+  }
+
   render() {
     const {
       appointment,
@@ -143,6 +160,7 @@ class AppointmentView extends Component {
       onShowDirections,
       onHintRequested
     } = this.props;
+
     return (
       <div className="appointment-guide">
         <div className="my-4">
@@ -153,23 +171,11 @@ class AppointmentView extends Component {
         </div>
         <HintButton
           onHintRequested={onHintRequested}
-          isDisabled={hintLevel >= HINT_LEVELS.length}
+          isDisabled={hintLevel >= HINT_LEVELS.length - 1}
         />
         <Card
           title={<span>Appointment</span>}
-          infoText={
-            <span>
-              {appointment ? (
-                <Hint
-                  isVisible={this.isHintAvailable(HINT_TYPE.APPOINTMENT_HINT)}
-                  url={getResourceUrl(
-                    RESOURCE_TYPE.Appointment,
-                    appointment.id
-                  )}
-                />
-              ) : null}
-            </span>
-          }
+          infoText={this.renderAppointmentHint()}
           actionButtonText="Close"
           onAction={onClose}
         >

@@ -14,6 +14,9 @@ const FHIR_BASE = "http://hapi.fhir.org/baseDstu3";
 
 const RESOURCE_IDS_FILE = path.resolve("./src/assets/fhir-resources.json");
 
+const USE_SECRET_DISPLAY_TEXT = true;
+const SECRET_DISPLAY_TEXT = "secret";
+
 async function readTemplate(type) {
   const filepath = path.resolve(TEMPLATES_DIR, `${type}.json`);
   return jsonfile.readFile(filepath).catch(() => {
@@ -94,6 +97,10 @@ function generateDisplay(data, properties) {
 }
 
 function getDisplayName(name = []) {
+  if (USE_SECRET_DISPLAY_TEXT) {
+    return SECRET_DISPLAY_TEXT;
+  }
+
   const displayName = name.find(n => n.use === "official") || name[0];
   return (
     displayName.text ||

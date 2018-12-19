@@ -7,7 +7,7 @@ import Hint from "./Hint";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { SECRET_IDENTIFIER, SECRET_NAME } from "../../constants";
-import { getPatientSearchUrl } from "../../utils/fhirUtils";
+import { getPatientSearchUrlParts } from "../../utils/fhirUtils";
 
 class CheckInPrompt extends Component {
   state = { id: "" };
@@ -75,8 +75,15 @@ class CheckInPrompt extends Component {
 
   renderHint() {
     const { hintLevel } = this.props;
+    const [baseUrl, urlSuffix] = getPatientSearchUrlParts(SECRET_NAME);
     return (
-      <Hint isVisible={hintLevel > 0} url={getPatientSearchUrl(SECRET_NAME)} />
+      <div className="mb-1">
+        <Hint
+          isVisible={hintLevel > 0}
+          baseUrl={baseUrl}
+          urlSuffix={urlSuffix}
+        />
+      </div>
     );
   }
 
