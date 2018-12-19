@@ -51,6 +51,10 @@ table {
   overflow-wrap: normal;
 }
 
+.hint .badge-info:hover {
+  background-color: #29537c;
+}
+
 @media (max-width: 590px) {
   body {
     font-size: 12px;

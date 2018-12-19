@@ -31,7 +31,7 @@ class CheckInPrompt extends Component {
   handleHintRequested = () => {
     const { hintLevel, onHintRequested } = this.props;
 
-    if (hintLevel > 0) {
+    if (hintLevel > 1) {
       this.setState({ id: SECRET_IDENTIFIER });
     }
 
@@ -76,10 +76,12 @@ class CheckInPrompt extends Component {
   renderHint() {
     const { hintLevel } = this.props;
     const [baseUrl, urlSuffix] = getPatientSearchUrlParts(SECRET_NAME);
+    const text = hintLevel > 1 ? "Click me!" : urlSuffix;
     return (
       <div className="mb-1">
         <Hint
           isVisible={hintLevel > 0}
+          primaryText={text}
           baseUrl={baseUrl}
           urlSuffix={urlSuffix}
         />
@@ -106,7 +108,7 @@ class CheckInPrompt extends Component {
         </div>
         <HintButton
           onHintRequested={this.handleHintRequested}
-          isDisabled={hintLevel >= 2}
+          isDisabled={hintLevel >= 3}
         />
         {this.renderCard()}
       </div>

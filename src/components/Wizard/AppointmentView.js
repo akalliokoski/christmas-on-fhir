@@ -181,8 +181,16 @@ class AppointmentView extends Component {
       <div className="appointment-guide">
         <div className="my-4">
           <div className="alert alert-info">
-            What is the official name of Santa Claus? Where is the appointment?
-            Who is the practitioner? Can you find out why Santa Claus is ill?
+            <strong> Can you find out some details of the appointment?</strong>{" "}
+            Why Santa Claus is ill? Where is the appointment? Who is the
+            practitioner? What is the official name of Santa Claus?{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="http://hapi.fhir.org/"
+            >
+              <strong>Use FHIR!</strong>
+            </a>
           </div>
         </div>
         <HintButton
