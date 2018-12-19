@@ -181,9 +181,9 @@ class AppointmentView extends Component {
       <div className="appointment-guide">
         <div className="my-4">
           <div className="alert alert-info">
-            <strong> Can you find out some details of the appointment?</strong>{" "}
-            Why Santa Claus is ill? Where is the appointment? Who is the
-            practitioner? What is the official name of Santa Claus?{" "}
+            <strong>Can you find out some details of the appointment?</strong>{" "}
+            Why Santa Claus is ill? Who is the practitioner? What is the
+            official name of Santa Claus?{" "}
             <a
               target="_blank"
               rel="noopener noreferrer"
