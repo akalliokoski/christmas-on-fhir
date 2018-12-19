@@ -38,7 +38,6 @@ class AppointmentView extends Component {
   isHintAvailable(hintType) {
     const { hintLevel } = this.props;
     const level = HINT_LEVELS.indexOf(hintType);
-    console.log("isHint", hintLevel, level, hintLevel >= level, hintType);
     return hintLevel >= level;
   }
 
