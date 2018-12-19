@@ -34,6 +34,8 @@ const HINT_LEVELS = [
   HINT_TYPE.CUSTOMER_VALUE
 ];
 
+const MAX_HINT_LEVEL = HINT_LEVELS.length - 1;
+
 class AppointmentView extends Component {
   isHintAvailable(hintType) {
     const { hintLevel } = this.props;
@@ -204,8 +206,9 @@ class AppointmentView extends Component {
           </div>
         </div>
         <HintButton
+          hintLevel={hintLevel}
+          maxHintLevel={MAX_HINT_LEVEL}
           onHintRequested={onHintRequested}
-          isDisabled={hintLevel >= HINT_LEVELS.length - 1}
         />
         <Card
           title={<span>Appointment</span>}

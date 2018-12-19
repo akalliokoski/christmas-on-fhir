@@ -9,8 +9,18 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { SECRET_IDENTIFIER, SECRET_NAME } from "../../constants";
 import { getPatientSearchUrlParts } from "../../utils/fhirUtils";
 
+const MAX_HINT_LEVEL = 3;
+const PATIENT_HINT = 1;
+const CLICK_HINT = 2;
+const ID_HINT = 3;
+
 class CheckInPrompt extends Component {
   state = { id: "" };
+
+  isHintAvailable(hint) {
+    const { hintLevel } = this.props;
+    return hintLevel >= hint;
+  }
 
   handleSubmit = e => {
     e.preventDefault();
@@ -29,9 +39,9 @@ class CheckInPrompt extends Component {
   };
 
   handleHintRequested = () => {
-    const { hintLevel, onHintRequested } = this.props;
+    const { onHintRequested } = this.props;
 
-    if (hintLevel > 1) {
+    if (this.isHintAvailable(ID_HINT - 1)) {
       this.setState({ id: SECRET_IDENTIFIER });
     }
 
@@ -74,13 +84,12 @@ class CheckInPrompt extends Component {
   }
 
   renderHint() {
-    const { hintLevel } = this.props;
     const [baseUrl, urlSuffix] = getPatientSearchUrlParts(SECRET_NAME);
-    const text = hintLevel > 1 ? "Click me!" : urlSuffix;
+    const text = this.isHintAvailable(CLICK_HINT) ? "Click me!" : urlSuffix;
     return (
       <div className="mb-1">
         <Hint
-          isVisible={hintLevel > 0}
+          isVisible={this.isHintAvailable(PATIENT_HINT)}
           primaryText={text}
           baseUrl={baseUrl}
           urlSuffix={urlSuffix}
@@ -107,8 +116,9 @@ class CheckInPrompt extends Component {
           </div>
         </div>
         <HintButton
+          hintLevel={hintLevel}
+          maxHintLevel={MAX_HINT_LEVEL}
           onHintRequested={this.handleHintRequested}
-          isDisabled={hintLevel >= 3}
         />
         {this.renderCard()}
       </div>

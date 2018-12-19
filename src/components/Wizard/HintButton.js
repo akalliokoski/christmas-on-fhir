@@ -4,7 +4,9 @@ import PropTypes from "prop-types";
 
 class HintButton extends Component {
   render() {
-    const { isDisabled, onHintRequested } = this.props;
+    const { hintLevel, maxHintLevel, onHintRequested } = this.props;
+    const numberOfHints = maxHintLevel - hintLevel;
+    const isDisabled = hintLevel >= maxHintLevel;
     return (
       <div className="mb-4 text-center">
         <Button
@@ -15,6 +17,9 @@ class HintButton extends Component {
           disabled={isDisabled}
         >
           Give me a hint!
+          <span className="badge badge-pill badge-primary float-right">
+            {numberOfHints}
+          </span>
         </Button>
       </div>
     );
@@ -22,7 +27,8 @@ class HintButton extends Component {
 }
 
 HintButton.propTypes = {
-  isDisabled: PropTypes.bool,
+  hintLevel: PropTypes.number.isRequired,
+  maxHintLevel: PropTypes.number.isRequired,
   onHintRequested: PropTypes.func.isRequired
 };
 
