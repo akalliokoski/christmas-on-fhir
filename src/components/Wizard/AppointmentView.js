@@ -20,7 +20,8 @@ const HINT_TYPE = {
   PRACTITIONER_VALUE: "PRACTITIONER_VALUE",
   CUSTOMER_HINT: "CUSTOMER_HINT",
   CUSTOMER_VALUE: "CUSTOMER_VALUE",
-  APPOINTMENT_HINT: "APPOINTMENT_HINT"
+  APPOINTMENT_HINT: "APPOINTMENT_HINT",
+  REASON_HINT: "REASON_HINT"
 };
 
 const HINT_LEVELS = [
@@ -31,7 +32,8 @@ const HINT_LEVELS = [
   HINT_TYPE.PRACTITIONER_HINT,
   HINT_TYPE.PRACTITIONER_VALUE,
   HINT_TYPE.CUSTOMER_HINT,
-  HINT_TYPE.CUSTOMER_VALUE
+  HINT_TYPE.CUSTOMER_VALUE,
+  HINT_TYPE.REASON_HINT
 ];
 
 const MAX_HINT_LEVEL = HINT_LEVELS.length - 1;
@@ -48,7 +50,29 @@ class AppointmentView extends Component {
     return isVisible ? getParticipantDisplay(resource) : "******";
   }
 
-  renderReason() {}
+  renderReason() {
+    const { appointment } = this.props;
+    if (
+      !appointment ||
+      !appointment.reason ||
+      appointment.reason.length === 0
+    ) {
+      return null;
+    }
+
+    const reason = appointment.reason[0];
+    const { text = "" } = reason;
+    const isRowVisible = this.isHintAvailable(HINT_TYPE.REASON_HINT);
+    const rowVisibilityClass = isRowVisible ? "" : "d-none";
+
+    return (
+      <tr className={rowVisibilityClass}>
+        <td>Reason</td>
+        <td>{text}</td>
+        <td />
+      </tr>
+    );
+  }
 
   renderParticipant(
     resourceType,
@@ -224,6 +248,8 @@ class AppointmentView extends Component {
 
   render() {
     const { hintLevel, onClose, onHintRequested } = this.props;
+    const showCloseButton = hintLevel >= MAX_HINT_LEVEL;
+    const closeButtonText = showCloseButton ? "Close" : null;
 
     return (
       <div className="appointment-guide">
@@ -236,7 +262,7 @@ class AppointmentView extends Component {
         <Card
           title={<span>Appointment</span>}
           infoText={this.renderAppointmentHint()}
-          actionButtonText="Close"
+          actionButtonText={closeButtonText}
           onAction={onClose}
         >
           <div className="table-responsive">
