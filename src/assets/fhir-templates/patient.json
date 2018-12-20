@@ -12,8 +12,8 @@
     {
       "use": "usual",
       "text": "Santa Claus",
-      "prefix": ["Santa"],
-      "given": ["Claus"]
+      "family": "Claus",
+      "given": ["Santa"]
     },
     {
       "use": "official",
