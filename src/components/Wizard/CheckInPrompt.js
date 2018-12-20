@@ -55,7 +55,7 @@ class CheckInPrompt extends Component {
     return (
       <Card
         title={<span>Check-in</span>}
-        infoText={<span>Please type in your ID</span>}
+        infoText={<span>Please type in your identifier</span>}
       >
         {this.renderHint()}
         <Form onSubmit={this.handleSubmit}>

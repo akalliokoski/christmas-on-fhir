@@ -15,8 +15,6 @@ export const STATUS = {
 };
 
 class Wizard extends Component {
-  state = { hintLevel: 0, hints: {} };
-
   constructor() {
     super();
 
@@ -27,10 +25,6 @@ class Wizard extends Component {
       [STATUS.CHECKED_IN_MAP]: this.renderMap
     };
   }
-
-  handleHintLevelChange = (hintLevel, hints) => {
-    this.setState({ hintLevel, hints });
-  };
 
   handleCheckIn = patientIdentifier => {
     this.setState({ hintLevel: 0 });
@@ -46,15 +40,14 @@ class Wizard extends Component {
   };
 
   renderCheckIn = () => {
-    const { isLoading } = this.props;
-    const { hintLevel, hints } = this.state;
+    const { hintLevel, hints, isLoading, onHintLevelChange } = this.props;
     return (
       <CheckInPrompt
         isLoading={isLoading}
         hintLevel={hintLevel}
         hints={hints}
         onCheckIn={this.handleCheckIn}
-        onHintLevelChange={this.handleHintLevelChange}
+        onHintLevelChange={onHintLevelChange}
       />
     );
   };
@@ -64,8 +57,15 @@ class Wizard extends Component {
   );
 
   renderAppointment = () => {
-    const { appointment, participant, onShowMap } = this.props;
-    const { hintLevel, hints } = this.state;
+    const {
+      hintLevel,
+      hints,
+      appointment,
+      participant,
+      onShowMap,
+      onHintLevelChange
+    } = this.props;
+
     return (
       <AppointmentView
         appointment={appointment}
@@ -74,7 +74,7 @@ class Wizard extends Component {
         hints={hints}
         onClose={this.handleClose}
         onShowDirections={onShowMap}
-        onHintLevelChange={this.handleHintLevelChange}
+        onHintLevelChange={onHintLevelChange}
       />
     );
   };
@@ -116,13 +116,16 @@ class Wizard extends Component {
 
 Wizard.propTypes = {
   status: PropTypes.string.isRequired,
+  hintLevel: PropTypes.number.isRequired,
+  hints: PropTypes.object.isRequired,
   isLoading: PropTypes.bool,
   appointment: PropTypes.object,
   participant: PropTypes.array,
   onCheckIn: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onShowMap: PropTypes.func.isRequired,
-  onCloseMap: PropTypes.func.isRequired
+  onCloseMap: PropTypes.func.isRequired,
+  onHintLevelChange: PropTypes.func.isRequired
 };
 
 export default Wizard;

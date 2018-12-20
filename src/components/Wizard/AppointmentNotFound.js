@@ -10,7 +10,7 @@ class AppointmentNotFound extends Component {
         <div className="my-4">
           <div className="alert alert-primary">
             <strong>Only Santa Claus can be checked in!</strong> But what is his
-            ID?
+            identifier?
           </div>
         </div>
         <Card
