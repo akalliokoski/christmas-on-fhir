@@ -1,6 +1,6 @@
 Patient self-check-in web app that turned out to be a christmas puzzle. :santa:
 
-¯\_(ツ)_/¯
+¯\\_(ツ)_/¯
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
