@@ -65,11 +65,12 @@ class CheckInPrompt extends Component {
               value={id}
               onChange={this.handleIdChange}
               className="text-center"
+              disabled={isLoading}
             />
             <button
               className="btn btn-primary btn-lg mt-1 btn-block"
               type="submit"
-              disabled={!id}
+              disabled={!id || isLoading}
             >
               {isLoading ? (
                 <FontAwesomeIcon icon={faCircleNotch} spin />
@@ -137,6 +138,7 @@ class CheckInPrompt extends Component {
 
 CheckInPrompt.propTypes = {
   hintLevel: PropTypes.number,
+  isLoading: PropTypes.bool,
   onCheckIn: PropTypes.func.isRequired,
   onHintRequested: PropTypes.func.isRequired
 };
