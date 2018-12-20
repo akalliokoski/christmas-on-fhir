@@ -4,7 +4,11 @@ import PropTypes from "prop-types";
 import Card from "./Card";
 import HintButton from "./HintButton";
 import Hint from "./Hint";
-import { RESOURCE_TYPE } from "../../constants";
+import {
+  RESOURCE_TYPE,
+  APPOINTMENT_HINT,
+  APPOINTMENT_HINT_LEVELS
+} from "../../constants";
 import {
   findParticipant,
   getParticipantDisplay,
@@ -12,43 +16,18 @@ import {
   getAppointmentSearchUrlParts
 } from "../../utils/fhirUtils";
 
-const HINT_TYPE = {
-  NO_HINT: "NO_HINT",
-  LOCATION_HINT: "LOCATION_HINT",
-  LOCATION_VALUE: "LOCATION_TEXT",
-  PRACTITIONER_HINT: "PRACTITIONER_HINT",
-  PRACTITIONER_VALUE: "PRACTITIONER_VALUE",
-  CUSTOMER_HINT: "CUSTOMER_HINT",
-  CUSTOMER_VALUE: "CUSTOMER_VALUE",
-  APPOINTMENT_HINT: "APPOINTMENT_HINT",
-  REASON_HINT: "REASON_HINT"
-};
-
-const HINT_LEVELS = [
-  HINT_TYPE.NO_HINT,
-  HINT_TYPE.APPOINTMENT_HINT,
-  HINT_TYPE.LOCATION_HINT,
-  HINT_TYPE.LOCATION_VALUE,
-  HINT_TYPE.PRACTITIONER_HINT,
-  HINT_TYPE.PRACTITIONER_VALUE,
-  HINT_TYPE.CUSTOMER_HINT,
-  HINT_TYPE.CUSTOMER_VALUE,
-  HINT_TYPE.REASON_HINT
-];
-
-const MAX_HINT_LEVEL = HINT_LEVELS.length - 1;
 const SHOW_TABLE_ROWS_ALWAYS = true;
+const HIDDEN_VALUE = "******";
 
 class AppointmentView extends Component {
   isHintAvailable(hintType) {
-    const { hintLevel } = this.props;
-    const level = HINT_LEVELS.indexOf(hintType);
-    return hintLevel >= level;
+    const { hints } = this.props;
+    return hints[hintType];
   }
 
   getParticipantDisplay(resource, hintType) {
     const isVisible = this.isHintAvailable(hintType);
-    return isVisible ? getParticipantDisplay(resource) : "******";
+    return isVisible ? getParticipantDisplay(resource) : HIDDEN_VALUE;
   }
 
   renderReason() {
@@ -63,14 +42,15 @@ class AppointmentView extends Component {
 
     const reason = appointment.reason[0];
     const { text = "" } = reason;
-    const isRowVisible =
-      SHOW_TABLE_ROWS_ALWAYS || this.isHintAvailable(HINT_TYPE.REASON_HINT);
+    const isValueVisible = this.isHintAvailable(APPOINTMENT_HINT.REASON_HINT);
+    const reasonValue = isValueVisible ? text : HIDDEN_VALUE;
+    const isRowVisible = SHOW_TABLE_ROWS_ALWAYS || isValueVisible;
     const rowVisibilityClass = isRowVisible ? "" : "d-none";
 
     return (
       <tr className={rowVisibilityClass}>
         <td>Reason</td>
-        <td>{text}</td>
+        <td>{reasonValue}</td>
         <td />
       </tr>
     );
@@ -118,8 +98,8 @@ class AppointmentView extends Component {
       RESOURCE_TYPE.Patient,
       "Customer",
       participant,
-      HINT_TYPE.CUSTOMER_VALUE,
-      HINT_TYPE.CUSTOMER_HINT
+      APPOINTMENT_HINT.CUSTOMER_VALUE,
+      APPOINTMENT_HINT.CUSTOMER_HINT
     );
   }
 
@@ -129,8 +109,8 @@ class AppointmentView extends Component {
       RESOURCE_TYPE.Practitioner,
       "Practitioner",
       participant,
-      HINT_TYPE.PRACTITIONER_VALUE,
-      HINT_TYPE.PRACTITIONER_HINT
+      APPOINTMENT_HINT.PRACTITIONER_VALUE,
+      APPOINTMENT_HINT.PRACTITIONER_HINT
     );
   }
 
@@ -141,8 +121,10 @@ class AppointmentView extends Component {
       return null;
     }
 
-    const isValueVisible = this.isHintAvailable(HINT_TYPE.LOCATION_VALUE);
-    const isHintVisible = this.isHintAvailable(HINT_TYPE.LOCATION_HINT);
+    const isValueVisible = this.isHintAvailable(
+      APPOINTMENT_HINT.LOCATION_VALUE
+    );
+    const isHintVisible = this.isHintAvailable(APPOINTMENT_HINT.LOCATION_HINT);
     const [baseUrl, urlSuffix] = getParticipantUrlParts(location);
     const buttonVisibleClass = isValueVisible ? "visible" : "invisible";
 
@@ -154,7 +136,10 @@ class AppointmentView extends Component {
       <tr className={rowVisibilityClass}>
         <td>Location</td>
         <td>
-          {this.getParticipantDisplay(location, HINT_TYPE.LOCATION_VALUE)}
+          {this.getParticipantDisplay(
+            location,
+            APPOINTMENT_HINT.LOCATION_VALUE
+          )}
           <br />
           <Button
             className={buttonVisibleClass}
@@ -207,7 +192,7 @@ class AppointmentView extends Component {
 
     return (
       <Hint
-        isVisible={this.isHintAvailable(HINT_TYPE.APPOINTMENT_HINT)}
+        isVisible={this.isHintAvailable(APPOINTMENT_HINT.APPOINTMENT_HINT)}
         baseUrl={baseUrl}
         urlSuffix={urlSuffix}
       />
@@ -244,16 +229,20 @@ class AppointmentView extends Component {
     );
   }
 
-  renderAlert() {
+  isMaxHintLevel() {
     const { hintLevel } = this.props;
-    return hintLevel < MAX_HINT_LEVEL
-      ? this.renderInfoAlert()
-      : this.renderSuccessAlert();
+    return hintLevel >= APPOINTMENT_HINT_LEVELS.length - 1;
+  }
+
+  renderAlert() {
+    return this.isMaxHintLevel()
+      ? this.renderSuccessAlert()
+      : this.renderInfoAlert();
   }
 
   render() {
-    const { hintLevel, onClose, onHintRequested } = this.props;
-    const showCloseButton = hintLevel >= MAX_HINT_LEVEL;
+    const { hintLevel, onClose, onHintLevelChange } = this.props;
+    const showCloseButton = this.isMaxHintLevel();
     const closeButtonText = showCloseButton ? "Close" : null;
 
     return (
@@ -261,8 +250,8 @@ class AppointmentView extends Component {
         {this.renderAlert()}
         <HintButton
           hintLevel={hintLevel}
-          maxHintLevel={MAX_HINT_LEVEL}
-          onHintRequested={onHintRequested}
+          hintTypes={APPOINTMENT_HINT_LEVELS}
+          onHintLevelChange={onHintLevelChange}
         />
         <Card
           title={<span>Appointment</span>}
@@ -291,9 +280,10 @@ AppointmentView.propTypes = {
   appointment: PropTypes.object,
   participant: PropTypes.array,
   hintLevel: PropTypes.number,
+  hints: PropTypes.object,
   onClose: PropTypes.func.isRequired,
   onShowDirections: PropTypes.func.isRequired,
-  onHintRequested: PropTypes.func.isRequired
+  onHintLevelChange: PropTypes.func.isRequired
 };
 
 export default AppointmentView;

@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 import { Form, FormGroup, Input } from "reactstrap";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import Card from "./Card";
 import HintButton from "./HintButton";
 import Hint from "./Hint";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
-import { SECRET_IDENTIFIER, SECRET_NAME } from "../../constants";
 import { getPatientSearchUrlParts } from "../../utils/fhirUtils";
-
-const MAX_HINT_LEVEL = 3;
-const PATIENT_HINT = 1;
-const CLICK_HINT = 2;
-const ID_HINT = 3;
+import {
+  SECRET_IDENTIFIER,
+  SECRET_NAME,
+  CHECK_IN_HINT,
+  CHECK_IN_HINT_LEVELS
+} from "../../constants";
 
 class CheckInPrompt extends Component {
   state = { id: "" };
 
-  isHintAvailable(hint) {
-    const { hintLevel } = this.props;
-    return hintLevel >= hint;
+  isHintAvailable(hintType) {
+    const { hints } = this.props;
+    return hints[hintType];
   }
 
   handleSubmit = e => {
@@ -38,14 +38,14 @@ class CheckInPrompt extends Component {
     this.setState({ id: event.target.value });
   };
 
-  handleHintRequested = () => {
-    const { onHintRequested } = this.props;
+  handleHintLevelChange = (hintLevel, hints) => {
+    const { onHintLevelChange } = this.props;
 
-    if (this.isHintAvailable(ID_HINT - 1)) {
+    if (hints[CHECK_IN_HINT.ID]) {
       this.setState({ id: SECRET_IDENTIFIER });
     }
 
-    onHintRequested();
+    onHintLevelChange(hintLevel, hints);
   };
 
   renderCard() {
@@ -86,11 +86,13 @@ class CheckInPrompt extends Component {
 
   renderHint() {
     const [baseUrl, urlSuffix] = getPatientSearchUrlParts(SECRET_NAME);
-    const text = this.isHintAvailable(CLICK_HINT) ? "Click me!" : urlSuffix;
+    const text = this.isHintAvailable(CHECK_IN_HINT.CLICK)
+      ? "Click me!"
+      : urlSuffix;
     return (
       <div className="mb-1">
         <Hint
-          isVisible={this.isHintAvailable(PATIENT_HINT)}
+          isVisible={this.isHintAvailable(CHECK_IN_HINT.PATIENT)}
           primaryText={text}
           baseUrl={baseUrl}
           urlSuffix={urlSuffix}
@@ -127,8 +129,8 @@ class CheckInPrompt extends Component {
         </div>
         <HintButton
           hintLevel={hintLevel}
-          maxHintLevel={MAX_HINT_LEVEL}
-          onHintRequested={this.handleHintRequested}
+          hintTypes={CHECK_IN_HINT_LEVELS}
+          onHintLevelChange={this.handleHintLevelChange}
         />
         {this.renderCard()}
       </div>
@@ -138,9 +140,10 @@ class CheckInPrompt extends Component {
 
 CheckInPrompt.propTypes = {
   hintLevel: PropTypes.number,
+  hints: PropTypes.object,
   isLoading: PropTypes.bool,
   onCheckIn: PropTypes.func.isRequired,
-  onHintRequested: PropTypes.func.isRequired
+  onHintLevelChange: PropTypes.func.isRequired
 };
 
 export default CheckInPrompt;

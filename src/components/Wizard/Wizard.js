@@ -15,7 +15,7 @@ export const STATUS = {
 };
 
 class CheckIn extends Component {
-  state = { hintLevel: 0 };
+  state = { hintLevel: 0, hints: {} };
 
   constructor() {
     super();
@@ -28,9 +28,8 @@ class CheckIn extends Component {
     };
   }
 
-  handleHint = () => {
-    const { hintLevel } = this.state;
-    this.setState({ hintLevel: hintLevel + 1 });
+  handleHintLevelChange = (hintLevel, hints) => {
+    this.setState({ hintLevel, hints });
   };
 
   handleCheckIn = patientIdentifier => {
@@ -48,13 +47,14 @@ class CheckIn extends Component {
 
   renderCheckIn = () => {
     const { isLoading } = this.props;
-    const { hintLevel } = this.state;
+    const { hintLevel, hints } = this.state;
     return (
       <CheckInPrompt
         isLoading={isLoading}
         hintLevel={hintLevel}
+        hints={hints}
         onCheckIn={this.handleCheckIn}
-        onHintRequested={this.handleHint}
+        onHintLevelChange={this.handleHintLevelChange}
       />
     );
   };
@@ -65,15 +65,16 @@ class CheckIn extends Component {
 
   renderAppointment = () => {
     const { appointment, participant, onShowMap } = this.props;
-    const { hintLevel } = this.state;
+    const { hintLevel, hints } = this.state;
     return (
       <AppointmentView
         appointment={appointment}
         participant={participant}
         hintLevel={hintLevel}
+        hints={hints}
         onClose={this.handleClose}
         onShowDirections={onShowMap}
-        onHintRequested={this.handleHint}
+        onHintLevelChange={this.handleHintLevelChange}
       />
     );
   };
