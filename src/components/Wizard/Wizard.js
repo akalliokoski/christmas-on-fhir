@@ -14,7 +14,7 @@ export const STATUS = {
   CHECKED_IN_MAP: "CHECKED_IN_MAP"
 };
 
-class CheckIn extends Component {
+class Wizard extends Component {
   state = { hintLevel: 0, hints: {} };
 
   constructor() {
@@ -114,7 +114,7 @@ class CheckIn extends Component {
   }
 }
 
-CheckIn.propTypes = {
+Wizard.propTypes = {
   status: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   appointment: PropTypes.object,
@@ -125,4 +125,4 @@ CheckIn.propTypes = {
   onCloseMap: PropTypes.func.isRequired
 };
 
-export default CheckIn;
+export default Wizard;
