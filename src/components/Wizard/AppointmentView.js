@@ -37,6 +37,7 @@ const HINT_LEVELS = [
 ];
 
 const MAX_HINT_LEVEL = HINT_LEVELS.length - 1;
+const SHOW_TABLE_ROWS_ALWAYS = true;
 
 class AppointmentView extends Component {
   isHintAvailable(hintType) {
@@ -62,7 +63,8 @@ class AppointmentView extends Component {
 
     const reason = appointment.reason[0];
     const { text = "" } = reason;
-    const isRowVisible = this.isHintAvailable(HINT_TYPE.REASON_HINT);
+    const isRowVisible =
+      SHOW_TABLE_ROWS_ALWAYS || this.isHintAvailable(HINT_TYPE.REASON_HINT);
     const rowVisibilityClass = isRowVisible ? "" : "d-none";
 
     return (
@@ -88,6 +90,7 @@ class AppointmentView extends Component {
 
     const [baseUrl, urlSuffix] = getParticipantUrlParts(resource);
     const isRowVisible =
+      SHOW_TABLE_ROWS_ALWAYS ||
       this.isHintAvailable(valueHintType) ||
       this.isHintAvailable(badgeHintType);
     const rowVisibilityClass = isRowVisible ? "" : "d-none";
@@ -143,7 +146,8 @@ class AppointmentView extends Component {
     const [baseUrl, urlSuffix] = getParticipantUrlParts(location);
     const buttonVisibleClass = isValueVisible ? "visible" : "invisible";
 
-    const isRowVisible = isValueVisible || isHintVisible;
+    const isRowVisible =
+      SHOW_TABLE_ROWS_ALWAYS || isValueVisible || isHintVisible;
     const rowVisibilityClass = isRowVisible ? "" : "d-none";
 
     return (
