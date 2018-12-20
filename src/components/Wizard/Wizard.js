@@ -86,8 +86,8 @@ class Wizard extends Component {
         <div className="my-4">
           <div className="alert alert-info">
             Did you know that Santa Claus' original home lies in the mysterious
-            Korvatunturi, in Finland? Of course, the exact location is a secret
-            only known to a chosen few.
+            Korvatunturi, in Finland? The exact location is a secret only known
+            to a chosen few.
           </div>
         </div>
         <Map
