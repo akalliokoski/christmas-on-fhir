@@ -30,7 +30,7 @@ class Header extends Component {
               rel="noopener noreferrer"
               href="https://github.com/akalliokoski/christmas-on-fhir"
             >
-              Github
+              GitHub
             </a>
           </li>
         </ul>

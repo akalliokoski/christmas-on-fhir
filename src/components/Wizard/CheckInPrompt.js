@@ -108,7 +108,7 @@ class CheckInPrompt extends Component {
         <div className="my-4">
           <div className="alert alert-info">
             <strong>Santa Claus is ill!</strong> Please help Santa to check-in
-            for an appointment. Use{" "}
+            for an appointment. You will need{" "}
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -120,7 +120,7 @@ class CheckInPrompt extends Component {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="http://hapi.fhir.org/"
+              href="http://hapi.fhir.org/resource?serverId=home_21&pretty=false&resource=Patient"
             >
               <strong>FHIR test server</strong>
             </a>
