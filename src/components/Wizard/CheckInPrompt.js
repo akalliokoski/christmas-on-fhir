@@ -105,14 +105,23 @@ class CheckInPrompt extends Component {
         <div className="my-4">
           <div className="alert alert-info">
             <strong>Santa Claus is ill!</strong> Please help Santa to check-in
-            for an appointment.{" "}
+            for an appointment. Use{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.hl7.org/fhir/patient.html#search"
+            >
+              <strong>FHIR Patient search</strong>
+            </a>{" "}
+            and{" "}
             <a
               target="_blank"
               rel="noopener noreferrer"
               href="http://hapi.fhir.org/"
             >
-              <strong>Use FHIR!</strong>
+              <strong>FHIR test server</strong>
             </a>
+            .
           </div>
         </div>
         <HintButton

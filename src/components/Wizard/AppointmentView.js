@@ -216,14 +216,15 @@ class AppointmentView extends Component {
         <div className="alert alert-info">
           <strong>Can you find out some details of the appointment?</strong> Why
           Santa Claus is ill? What is the location? Who is the practitioner?
-          What is the official name of Santa Claus?{" "}
+          What is the official name of Santa Claus? Try{" "}
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="http://hapi.fhir.org/"
+            href="https://www.hl7.org/fhir/appointment.html#search"
           >
-            <strong>Use FHIR!</strong>
-          </a>
+            <strong>FHIR Appointment search</strong>
+          </a>{" "}
+          first!
         </div>
       </div>
     );
