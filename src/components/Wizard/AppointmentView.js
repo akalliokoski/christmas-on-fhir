@@ -191,11 +191,13 @@ class AppointmentView extends Component {
     const [baseUrl, urlSuffix] = getAppointmentSearchUrlParts(patient);
 
     return (
-      <Hint
-        isVisible={this.isHintAvailable(APPOINTMENT_HINT.APPOINTMENT_HINT)}
-        baseUrl={baseUrl}
-        urlSuffix={urlSuffix}
-      />
+      <div className="mb-1">
+        <Hint
+          isVisible={this.isHintAvailable(APPOINTMENT_HINT.APPOINTMENT_HINT)}
+          baseUrl={baseUrl}
+          urlSuffix={urlSuffix}
+        />
+      </div>
     );
   }
 
@@ -255,10 +257,10 @@ class AppointmentView extends Component {
         />
         <Card
           title={<span>Appointment</span>}
-          infoText={this.renderAppointmentHint()}
           actionButtonText={closeButtonText}
           onAction={onClose}
         >
+          {this.renderAppointmentHint()}
           <div className="table-responsive">
             <table className="table text-left">
               <tbody>

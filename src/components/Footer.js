@@ -4,7 +4,7 @@ class Footer extends Component {
   render() {
     return (
       <footer className="mastfoot mt-auto">
-        <div className="inner">
+        <div className="inner pt-2 pb-1">
           <div>
             Made by{" "}
             <a
