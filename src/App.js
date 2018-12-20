@@ -51,8 +51,13 @@ class App extends Component {
     this.setState({ hintLevel, hints });
   };
 
-  reset = () => {
-    this.setState(initialState);
+  handleClose = () => {
+    const { status } = this.state;
+    const newState =
+      status === STATUS.APPOINTMENT_NOT_FOUND
+        ? { status: STATUS.CHECK_IN, isLoading: false }
+        : initialState;
+    this.setState(newState);
   };
 
   render() {
@@ -64,7 +69,7 @@ class App extends Component {
             className="lead"
             {...this.state}
             onCheckIn={this.handleCheckIn}
-            onClose={this.reset}
+            onClose={this.handleClose}
             onShowMap={this.handleShowMap}
             onCloseMap={this.handleCloseMap}
             onHintLevelChange={this.handleHintLevelChange}

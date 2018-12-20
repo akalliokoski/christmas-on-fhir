@@ -27,14 +27,11 @@ class Wizard extends Component {
   }
 
   handleCheckIn = patientIdentifier => {
-    this.setState({ hintLevel: 0 });
-
     const { onCheckIn } = this.props;
     onCheckIn(patientIdentifier);
   };
 
   handleClose = () => {
-    this.setState({ hintLevel: 0 });
     const { onClose } = this.props;
     onClose();
   };
