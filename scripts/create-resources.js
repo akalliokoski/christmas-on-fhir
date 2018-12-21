@@ -114,7 +114,7 @@ function getDisplay(resource) {
     case RESOURCE_TYPES.Practitioner:
       return getDisplayName(resource.name);
     case RESOURCE_TYPES.Location:
-      return generateDisplay(resource, ["name", "description"]);
+      return SECRET_DISPLAY_TEXT;
     default:
       return "";
   }
